@@ -1,0 +1,1403 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | TravelAgency</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/admin_dashboard.css' %}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MOBILE OVERLAY
+===================================================== -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <div class="sidebar-icon">
+            ✈
+        </div>
+
+        <h2>
+            Travel<span>Agency</span>
+        </h2>
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="sidebar-nav">
+
+        <a href="#dashboard"
+           class="active">
+
+            <span class="nav-icon">📊</span>
+
+            <span class="nav-text">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <a href="#customers">
+
+            <span class="nav-icon">👥</span>
+
+            <span class="nav-text">
+                Customers
+            </span>
+
+        </a>
+
+
+        <a href="#packages">
+
+            <span class="nav-icon">🧳</span>
+
+            <span class="nav-text">
+                Packages
+            </span>
+
+        </a>
+
+
+        <!--<a href="#bookings">
+
+            <span class="nav-icon">📅</span>
+
+            <span class="nav-text">
+                Bookings
+            </span>
+
+        </a> -->
+
+    </nav>
+
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <a href="/">
+
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span class="nav-text">
+                Visit Website
+            </span>
+
+        </a>
+
+
+        <form method="post" action="{% url 'admin_logout' %}" class="logout-form">
+
+            {% csrf_token %}
+
+            <button type="submit" class="logout-btn">
+                🚪 Logout
+            </button>
+
+        </form>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content"
+      id="dashboard">
+
+
+
+    <!-- =================================================
+         MOBILE TOPBAR
+    ================================================== -->
+
+    <div class="mobile-topbar">
+
+        <button
+            type="button"
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+        >
+            ☰
+        </button>
+
+
+        <div class="mobile-logo">
+
+            <div class="mobile-logo-icon">
+                ✈
+            </div>
+
+            <strong>
+                Travel<span>Agency</span>
+            </strong>
+
+        </div>
+
+
+        <div class="mobile-profile">
+            👤
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         DESKTOP TOPBAR
+    ================================================== -->
+
+    <header class="topbar">
+
+
+        <div class="page-heading">
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Manage your travel agency
+            </p>
+
+        </div>
+
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="admin-profile">
+
+            <div class="profile-icon">
+                👤
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ request.user.username }}
+                </strong>
+
+                <small>
+                    Administrator
+                </small>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <section class="statistics">
+
+
+        <!-- TOTAL CUSTOMERS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                👥
+            </div>
+
+            <div class="stat-info">
+
+                <h3>
+                    {{ total_customers|default:"0" }}
+                </h3>
+
+                <p>
+                    Total Customers
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TOTAL PACKAGES -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+                🧳
+            </div>
+
+            <div class="stat-info">
+
+                <h3>
+                    {{ total_packages|default:"0" }}
+                </h3>
+
+                <p>
+                    Travel Packages
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TOTAL BOOKINGS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                📅
+            </div>
+
+            <div class="stat-info">
+
+                <h3>
+                    {{ total_bookings|default:"0" }}
+                </h3>
+
+                <p>
+                    Total Bookings
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TOTAL REVENUE -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                💰
+            </div>
+
+            <div class="stat-info">
+
+                <h3>
+                    ₹{{ total_revenue|default:"0" }}
+                </h3>
+
+                <p>
+                    Total Revenue
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         CUSTOMER MANAGEMENT
+    ================================================== -->
+
+    <section
+        class="dashboard-section"
+        id="customers"
+    >
+
+
+        <!-- SECTION HEADER -->
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Customer Details
+                </h2>
+
+                <p>
+                    Manage customers and their selected packages.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CUSTOMER TABLE -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Sl.No
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Mobile
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Package
+                        </th>
+
+                        <th>
+                            Travel Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                    {% for customer in customers %}
+
+                    <tr>
+
+
+                        <!-- SERIAL -->
+
+                        <td class="serial-number">
+                            {{ forloop.counter }}
+                        </td>
+
+
+
+                        <!-- CUSTOMER -->
+
+                        <td>
+
+                            <div class="customer-name">
+
+                                <div class="customer-avatar">
+
+                                    {{ customer.full_name|first|upper }}
+
+                                </div>
+
+                                <strong>
+                                    {{ customer.full_name }}
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- MOBILE -->
+
+                        <td>
+                            {{ customer.mobile }}
+                        </td>
+
+
+
+                        <!-- EMAIL -->
+
+                        <td>
+                            {{ customer.email }}
+                        </td>
+
+
+
+                        <!-- PACKAGE -->
+
+                        <td>
+
+                            {% if customer.package %}
+
+                                <span class="package-badge">
+
+                                    {{ customer.package.destination }}
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="no-package">
+                                    No Package
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+
+                        <!-- TRAVEL DATE -->
+
+                        <td>
+                            {{ customer.travel_date }}
+                        </td>
+
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            <span class="status-badge">
+                                Active
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- ACTIONS -->
+
+                        <td>
+
+                            <div class="action-buttons">
+
+
+                                <!-- EDIT -->
+
+                                <button
+                                    type="button"
+                                    class="edit-btn edit-customer-btn"
+                                    title="Edit Customer"
+
+                                    data-id="{{ customer.id }}"
+                                    data-name="{{ customer.full_name|escape }}"
+                                    data-mobile="{{ customer.mobile|escape }}"
+                                    data-email="{{ customer.email|escape }}"
+                                    data-package="{{ customer.package.id }}"
+                                    data-date="{{ customer.travel_date|date:'Y-m-d' }}"
+                                    data-message="{{ customer.message|escape }}"
+                                >
+
+                                    ✏️
+
+                                </button>
+
+
+
+                                <!-- DELETE -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'delete_customer' customer.id %}"
+                                    onsubmit="return confirmDelete();"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                        title="Delete Customer"
+                                    >
+
+                                        🗑️
+
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="empty-row"
+                        >
+
+                            No customer records found.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         PACKAGE MANAGEMENT
+    ================================================== -->
+
+    <section
+        class="dashboard-section"
+        id="packages"
+    >
+
+
+        <!-- SECTION HEADER -->
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Package Overview
+                </h2>
+
+                <p>
+                    Manage your available travel packages.
+                </p>
+
+            </div>
+
+
+            <!-- ADD PACKAGE -->
+
+            <a
+                href="{% url 'add_package' %}"
+                class="add-btn"
+            >
+
+                <span>
+                    +
+                </span>
+
+                Add New Package
+
+            </a>
+
+        </div>
+
+
+
+        <!-- PACKAGE CARDS -->
+
+        <div class="package-summary">
+
+
+            {% for package in packages %}
+
+
+            <div class="summary-card">
+
+
+                <!-- IMAGE -->
+
+                <div
+                    class="summary-image"
+                    {% if package.image_url %}
+                    style="background-image: url('{{ package.image_url }}');"
+                    {% endif %}
+                >
+
+                    {% if not package.image_url %}
+
+                        <div class="no-image">
+                            🧳
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- CONTENT -->
+
+                <div class="summary-content">
+
+
+                    <h3>
+                        {{ package.destination }}
+                    </h3>
+
+
+                    <p class="package-duration">
+
+                        🕐
+
+                        {{ package.days }}
+                        Days /
+
+                        {{ package.nights }}
+                        Nights
+
+                    </p>
+
+
+                    <strong class="package-price">
+
+                        ₹{{ package.price|floatformat:0 }}/-
+
+                    </strong>
+
+
+
+                    <!-- STATUS -->
+
+                    {% if package.is_active %}
+
+                        <span class="package-active">
+                            ● Active
+                        </span>
+
+                    {% else %}
+
+                        <span class="package-inactive">
+                            ● Inactive
+                        </span>
+
+                    {% endif %}
+
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="package-actions">
+
+
+                        <!-- EDIT -->
+
+                        <a
+                            href="{% url 'edit_package' package.id %}"
+                            class="package-edit-btn"
+                            title="Edit Package"
+                        >
+
+                            <span class="button-icon">
+                                ✏️
+                            </span>
+
+                            <span>
+                                Edit
+                            </span>
+
+                        </a>
+
+
+
+                        <!-- DELETE -->
+
+                        <form
+                            method="post"
+                            action="{% url 'delete_package' package.id %}"
+                            onsubmit="return confirmPackageDelete();"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="package-delete-btn"
+                                title="Delete Package"
+                            >
+
+                                <span class="button-icon">
+                                    🗑️
+                                </span>
+
+                                <span>
+                                    Delete
+                                </span>
+
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% empty %}
+
+
+            <div class="no-packages">
+
+                <div class="no-package-icon">
+                    🧳
+                </div>
+
+                <h3>
+                    No Packages Available
+                </h3>
+
+                <p>
+                    Add your first travel package to display it here.
+                </p>
+
+                <a
+                    href="{% url 'add_package' %}"
+                    class="add-btn empty-add-btn"
+                >
+                    + Add Package
+                </a>
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         BOOKINGS PLACEHOLDER
+    ================================================== -->
+
+    <!--<section
+        class="dashboard-section bookings-section"
+        id="bookings"
+    >
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Bookings
+                </h2>
+
+                <p>
+                    Manage customer bookings.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="coming-soon">
+
+            <div class="coming-soon-icon">
+                📅
+            </div>
+
+            <h3>
+                Booking Management
+            </h3>
+
+            <p>
+                Booking management features can be added here.
+            </p>
+
+        </div>
+
+    </section>  -->
+
+
+
+    <!-- =================================================
+         EDIT CUSTOMER MODAL
+    ================================================== -->
+
+    <div
+        id="editCustomerModal"
+        class="customer-modal"
+    >
+
+
+        <div class="customer-modal-content">
+
+
+            <!-- HEADER -->
+
+            <div class="customer-modal-header">
+
+                <div>
+
+                    <h2>
+                        Edit Customer
+                    </h2>
+
+                    <p>
+                        Update customer information
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    id="closeEditCustomer"
+                    aria-label="Close"
+                >
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form
+                method="post"
+                id="editCustomerForm"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="edit-form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editFullName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            id="editFullName"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- MOBILE -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editMobile">
+                            Mobile
+                        </label>
+
+                        <input
+                            type="text"
+                            name="mobile"
+                            id="editMobile"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="editEmail"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- PACKAGE -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editPackage">
+                            Package
+                        </label>
+
+                        <select
+                            name="package"
+                            id="editPackage"
+                            required
+                        >
+
+                            {% for package in packages %}
+
+                                <option value="{{ package.id }}">
+
+                                    {{ package.destination }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- TRAVEL DATE -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editTravelDate">
+                            Travel Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="travel_date"
+                            id="editTravelDate"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- MESSAGE -->
+
+                    <div
+                        class="edit-form-group full-width"
+                    >
+
+                        <label for="editMessage">
+                            Message
+                        </label>
+
+                        <textarea
+                            name="message"
+                            id="editMessage"
+                            rows="4"
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="modal-actions">
+
+
+                    <button
+                        type="button"
+                        class="cancel-modal-btn"
+                        id="cancelEditCustomer"
+                    >
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-modal-btn"
+                    >
+
+                        💾 Save Changes
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 TravelAgency Admin Portal
+        </p>
+
+    </footer>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
+
+const menuToggle =
+    document.getElementById("menuToggle");
+
+const sidebar =
+    document.getElementById("sidebar");
+
+const sidebarOverlay =
+    document.getElementById("sidebarOverlay");
+
+
+function openSidebar() {
+
+    sidebar.classList.add("mobile-open");
+
+    sidebarOverlay.classList.add("show");
+
+    document.body.classList.add("menu-open");
+
+}
+
+
+function closeSidebar() {
+
+    sidebar.classList.remove("mobile-open");
+
+    sidebarOverlay.classList.remove("show");
+
+    document.body.classList.remove("menu-open");
+
+}
+
+
+if (menuToggle) {
+
+    menuToggle.addEventListener(
+        "click",
+        openSidebar
+    );
+
+}
+
+
+if (sidebarOverlay) {
+
+    sidebarOverlay.addEventListener(
+        "click",
+        closeSidebar
+    );
+
+}
+
+
+/* CLOSE SIDEBAR AFTER CLICKING MOBILE LINK */
+
+document
+    .querySelectorAll(".sidebar-nav a, .sidebar-bottom a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                if (window.innerWidth <= 800) {
+
+                    closeSidebar();
+
+                }
+
+            }
+        );
+
+    });
+
+
+
+/* =====================================================
+   CUSTOMER EDIT MODAL
+===================================================== */
+
+const editCustomerModal =
+    document.getElementById("editCustomerModal");
+
+
+const editCustomerForm =
+    document.getElementById("editCustomerForm");
+
+
+const editButtons =
+    document.querySelectorAll(".edit-customer-btn");
+
+
+
+/* OPEN MODAL */
+
+editButtons.forEach(function(button) {
+
+    button.addEventListener(
+        "click",
+        function() {
+
+
+            const id =
+                this.dataset.id;
+
+
+            const name =
+                this.dataset.name;
+
+
+            const mobile =
+                this.dataset.mobile;
+
+
+            const email =
+                this.dataset.email;
+
+
+            const packageId =
+                this.dataset.package;
+
+
+            const travelDate =
+                this.dataset.date;
+
+
+            const message =
+                this.dataset.message;
+
+
+
+            document
+                .getElementById("editFullName")
+                .value = name;
+
+
+            document
+                .getElementById("editMobile")
+                .value = mobile;
+
+
+            document
+                .getElementById("editEmail")
+                .value = email;
+
+
+            document
+                .getElementById("editPackage")
+                .value = packageId;
+
+
+            document
+                .getElementById("editTravelDate")
+                .value = travelDate;
+
+
+            document
+                .getElementById("editMessage")
+                .value = message;
+
+
+
+            editCustomerForm.action =
+                "/admin-customers/edit/" + id + "/";
+
+
+            editCustomerModal.classList.add("show");
+
+
+            document.body.classList.add("modal-open");
+
+        }
+    );
+
+});
+
+
+
+/* CLOSE MODAL */
+
+function closeEditModal() {
+
+    editCustomerModal.classList.remove("show");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+document
+    .getElementById("closeEditCustomer")
+    .addEventListener(
+        "click",
+        closeEditModal
+    );
+
+
+document
+    .getElementById("cancelEditCustomer")
+    .addEventListener(
+        "click",
+        closeEditModal
+    );
+
+
+
+/* CLICK OUTSIDE MODAL */
+
+editCustomerModal.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            editCustomerModal
+        ) {
+
+            closeEditModal();
+
+        }
+
+    }
+);
+
+
+
+/* ESCAPE KEY */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeEditModal();
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   DELETE CONFIRMATIONS
+===================================================== */
+
+function confirmDelete() {
+
+    return confirm(
+        "Are you sure you want to delete this customer?"
+    );
+
+}
+
+
+function confirmPackageDelete() {
+
+    return confirm(
+        "Are you sure you want to delete this package?"
+    );
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Admin Login | TravelAgency</title>
+
+<link rel="stylesheet"
+      href="{% static 'css/admin_login.css' %}">
+
+</head>
+
+<body>
+
+<!-- =========================
+     LOGIN PAGE
+========================== -->
+
+<div class="login-page">
+
+
+    <!-- LEFT SIDE -->
+
+    <div class="login-image">
+
+        <div class="image-overlay">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    ✈
+                </div>
+
+                <h1>
+                    Travel<span>Agency</span>
+                </h1>
+
+            </div>
+
+            <h2>
+                Welcome Back,
+                Administrator
+            </h2>
+
+            <p>
+                Manage your customers, travel packages
+                and bookings from one secure dashboard.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="login-section">
+
+        <div class="login-box">
+
+
+            <div class="login-heading">
+
+                <div class="login-icon">
+                    🔐
+                </div>
+
+                <h2>
+                    Admin Login
+                </h2>
+
+                <p>
+                    Login using your Django
+                    administrator account.
+                </p>
+
+            </div>
+
+
+            <!-- Django Login Form -->
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                <!-- Error message -->
+
+                {% if form.errors %}
+
+                    <div class="error-message">
+
+                        {{ error }}
+                        
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Username -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        placeholder="Enter admin username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Remember -->
+
+                <div class="login-options">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                        >
+
+                        Remember me
+
+                    </label>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+                    Login to Dashboard
+                </button>
+
+
+            </form>
+
+
+            <div class="back-home">
+
+                <a href="/">
+                    ← Back to TravelAgency
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

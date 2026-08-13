@@ -1,0 +1,766 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        TravelAgency | Explore. Dream. Discover.
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <a href="#home" class="logo">
+
+        <div class="logo-icon">
+            ✈
+        </div>
+
+        <div class="logo-text">
+            Travel<span>Agency</span>
+        </div>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#packages">
+            Packages
+        </a>
+
+        <a href="#about">
+            About Us
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+        <a
+            href="{% url 'admin_login' %}"
+            class="admin-btn"
+        >
+            👤 Admin
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= HERO SECTION ================= -->
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <p class="hero-small-title">
+            Travel The World
+        </p>
+
+        <h1>
+            Create Memories
+            <br>
+            That Last Forever
+        </h1>
+
+        <p class="hero-description">
+
+            Travel opens your heart, broadens your mind,
+            and fills your life with stories to tell.
+            Discover breathtaking destinations, experience
+            new cultures and create unforgettable memories
+            with us.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#packages"
+                class="primary-btn"
+            >
+                Explore Packages
+            </a>
+
+            <a
+                href="#contact"
+                class="secondary-btn"
+            >
+                Learn More
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= PACKAGES SECTION ================= -->
+
+<section
+    class="packages"
+    id="packages"
+>
+
+    <div class="section-heading">
+
+        <p>
+            BEST PACKAGES
+        </p>
+
+        <h2>
+            Popular Tourist Destinations
+        </h2>
+
+        <div class="heading-line"></div>
+
+    </div>
+
+
+    <div class="package-container">
+
+        {% for package in packages %}
+
+        <div class="package-card">
+
+            <!-- PACKAGE IMAGE -->
+
+            <div class="package-image-wrapper">
+
+                <img
+                    src="{{ package.image_url }}"
+                    alt="{{ package.destination }}"
+                    class="package-image"
+                >
+
+            </div>
+
+
+            <!-- PACKAGE CONTENT -->
+
+            <div class="package-content">
+
+                <h3>
+                    {{ package.destination }}
+                </h3>
+
+                <p class="duration">
+                    {{ package.days }}
+                    Days /
+                    {{ package.nights }}
+                    Nights
+                </p>
+
+                <div class="stars">
+                    ★★★★★
+                </div>
+
+                <p class="price">
+                    ₹{{ package.price|floatformat:0 }}/-
+                </p>
+
+
+                <!-- VIEW DETAILS -->
+
+                <button
+                    type="button"
+                    class="details-btn"
+                    onclick="openPackageModal(
+                        '{{ package.id }}',
+                        '{{ package.destination|escapejs }}',
+                        '{{ package.image_url|escapejs }}',
+                        '{{ package.days }}',
+                        '{{ package.nights }}',
+                        '{{ package.price }}',
+                        '{{ package.description|escapejs }}',
+                        '{{ package.inclusions|escapejs }}',
+                        '{{ package.exclusions|escapejs }}'
+                    )"
+                >
+                    <span>
+                        View Details
+                    </span>
+
+                    <span class="details-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <!-- SELECT PACKAGE -->
+
+                <button
+                    type="button"
+                    class="select-btn"
+                    onclick="selectPackage('{{ package.id }}')"
+                >
+                    Select Package
+                </button>
+
+            </div>
+
+        </div>
+
+
+        {% empty %}
+
+        <p>
+            No travel packages are currently available.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= PACKAGE DETAILS MODAL ================= -->
+
+<div
+    id="packageModal"
+    class="package-modal"
+>
+
+    <div class="package-modal-content">
+
+
+        <!-- CLOSE BUTTON -->
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closePackageModal()"
+            aria-label="Close"
+        >
+            ✕
+        </button>
+
+
+        <!-- IMAGE -->
+
+        <div class="modal-image-wrapper">
+
+            <img
+                id="modalImage"
+                src=""
+                alt=""
+                class="modal-package-image"
+            >
+
+        </div>
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-package-body">
+
+            <div class="modal-heading">
+
+                <h2 id="modalDestination"></h2>
+
+                <p id="modalDuration"></p>
+
+                <p
+                    id="modalPrice"
+                    class="price"
+                ></p>
+
+            </div>
+
+
+            <!-- ABOUT -->
+
+            <div class="modal-section">
+
+                <h3>
+                    About This Package
+                </h3>
+
+                <p id="modalDescription"></p>
+
+            </div>
+
+
+            <!-- INCLUDED -->
+
+            <div class="modal-section">
+
+                <h3>
+                    What's Included
+                </h3>
+
+                <p id="modalInclusions"></p>
+
+            </div>
+
+
+            <!-- NOT INCLUDED -->
+
+            <div class="modal-section">
+
+                <h3>
+                    What's Not Included
+                </h3>
+
+                <p id="modalExclusions"></p>
+
+            </div>
+
+
+            <!-- SELECT -->
+
+            <button
+                type="button"
+                class="select-btn modal-select-btn"
+                id="modalSelectButton"
+            >
+                Select This Package
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= CONTACT SECTION ================= -->
+
+<section
+    class="contact"
+    id="contact"
+>
+
+    <div class="contact-heading">
+
+        <h2>
+            Get In Touch
+        </h2>
+
+        <p>
+            Have questions or need help planning your trip?
+            Fill out the form and we'll get back to you.
+        </p>
+
+    </div>
+
+
+    <div class="contact-container">
+
+
+        <!-- CONTACT INFORMATION -->
+
+        <div class="contact-details">
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📍
+                </div>
+
+                <div>
+
+                    <h4>
+                        Address
+                    </h4>
+
+                    <p>
+                        123, Travel Street,<br>
+                        Paradise City,<br>
+                        India - 560001
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📞
+                </div>
+
+                <div>
+
+                    <h4>
+                        Phone
+                    </h4>
+
+                    <p>
+                        +91 98765 43210
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    ✉
+                </div>
+
+                <div>
+
+                    <h4>
+                        Email
+                    </h4>
+
+                    <p>
+                        info@travelagency.com
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    🌐
+                </div>
+
+                <div>
+
+                    <h4>
+                        Website
+                    </h4>
+
+                    <p>
+                        www.travelagency.com
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CONTACT FORM -->
+
+        <div class="contact-form">
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            placeholder="Your Name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email Address"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <input
+                            type="tel"
+                            name="mobile"
+                            placeholder="Phone Number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <select
+                            name="package"
+                            id="destination"
+                            required
+                        >
+
+                            <option value="">
+                                Select Destination
+                            </option>
+
+                            {% for package in packages %}
+
+                                <option value="{{ package.id }}">
+                                    {{ package.destination }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <input
+                        type="date"
+                        name="travel_date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <textarea
+                        name="message"
+                        placeholder="Tell us about your travel plans..."
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    ✈ Send Message
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+
+        © 2026
+
+        <span>
+            TravelAgency
+        </span>.
+
+        All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+function openPackageModal(
+    id,
+    destination,
+    image,
+    days,
+    nights,
+    price,
+    description,
+    inclusions,
+    exclusions
+) {
+
+    document.getElementById("modalImage").src = image;
+
+    document.getElementById("modalImage").alt =
+        destination;
+
+
+    document.getElementById("modalDestination").textContent =
+        destination;
+
+
+    document.getElementById("modalDuration").textContent =
+        days + " Days / " + nights + " Nights";
+
+
+    document.getElementById("modalPrice").textContent =
+        "₹" + Number(price).toLocaleString("en-IN");
+
+
+    document.getElementById("modalDescription").textContent =
+        description || "No description available.";
+
+
+    document.getElementById("modalInclusions").textContent =
+        inclusions || "No inclusion details available.";
+
+
+    document.getElementById("modalExclusions").textContent =
+        exclusions || "No exclusion details available.";
+
+
+    document.getElementById("modalSelectButton").onclick =
+        function () {
+
+            selectPackage(id);
+
+            closePackageModal();
+
+        };
+
+
+    document
+        .getElementById("packageModal")
+        .classList.add("show");
+
+
+
+    /* Prevent page scrolling while modal is open */
+
+    document.body.classList.add("modal-open");
+
+}
+
+
+
+function closePackageModal() {
+
+    document
+        .getElementById("packageModal")
+        .classList.remove("show");
+
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+
+document
+    .getElementById("packageModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === this) {
+
+                closePackageModal();
+
+            }
+
+        }
+    );
+
+
+
+/* ESC KEY */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape" &&
+            document
+                .getElementById("packageModal")
+                .classList.contains("show")
+        ) {
+
+            closePackageModal();
+
+        }
+
+    }
+);
+
+
+
+function selectPackage(packageId) {
+
+    const packageField =
+        document.getElementById("destination");
+
+
+    packageField.value =
+        packageId;
+
+
+    document
+        .getElementById("contact")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

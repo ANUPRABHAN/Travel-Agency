@@ -1,0 +1,763 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        {% if is_edit %}
+            Edit Package | TravelAgency
+        {% else %}
+            Add Package | TravelAgency
+        {% endif %}
+
+    </title>
+
+
+    <!-- ADMIN DASHBOARD CSS -->
+
+    <link rel="stylesheet"
+          href="{% static 'css/admin_dashboard.css' %}">
+
+
+    <!-- PACKAGE FORM CSS -->
+
+    <link rel="stylesheet"
+          href="{% static 'css/add_package.css' %}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MOBILE SIDEBAR OVERLAY
+===================================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <div class="sidebar-icon">
+            ✈
+        </div>
+
+        <h2>
+            Travel<span>Agency</span>
+        </h2>
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="sidebar-nav">
+
+
+        <a href="{% url 'admin_dashboard' %}">
+
+            <span class="nav-icon">
+                📊
+            </span>
+
+            <span class="nav-text">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'admin_dashboard' %}#customers">
+
+            <span class="nav-icon">
+                👥
+            </span>
+
+            <span class="nav-text">
+                Customers
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'admin_dashboard' %}#packages"
+           class="active">
+
+            <span class="nav-icon">
+                🧳
+            </span>
+
+            <span class="nav-text">
+                Packages
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'admin_dashboard' %}#bookings">
+
+            <span class="nav-icon">
+                📅
+            </span>
+
+            <span class="nav-text">
+                Bookings
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+
+        <a href="/">
+
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span class="nav-text">
+                Visit Website
+            </span>
+
+        </a>
+
+
+        <a href="/admin/logout/">
+
+            <span class="nav-icon">
+                🚪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+
+    <!-- =================================================
+         MOBILE TOPBAR
+    ================================================== -->
+
+    <div class="mobile-topbar">
+
+        <button
+            type="button"
+            class="menu-toggle"
+            id="menuToggle"
+        >
+            ☰
+        </button>
+
+
+        <div class="mobile-logo">
+
+            <div class="mobile-logo-icon">
+                ✈
+            </div>
+
+            <strong>
+                Travel<span>Agency</span>
+            </strong>
+
+        </div>
+
+
+        <div class="mobile-profile">
+            👤
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PAGE HEADER
+    ================================================== -->
+
+    <header class="topbar">
+
+
+        <div class="page-heading">
+
+            {% if is_edit %}
+
+                <h1>
+                    Edit Package
+                </h1>
+
+                <p>
+                    Update the details of this travel package.
+                </p>
+
+            {% else %}
+
+                <h1>
+                    Add New Package
+                </h1>
+
+                <p>
+                    Create a new travel package.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="admin-profile">
+
+            <div class="profile-icon">
+                👤
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ request.user.username }}
+                </strong>
+
+                <small>
+                    Administrator
+                </small>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =================================================
+         PACKAGE FORM CONTAINER
+    ================================================== -->
+
+    <section class="package-form-container">
+
+
+        <!-- FORM HEADER -->
+
+        <div class="form-header">
+
+
+            <div class="form-header-icon">
+                🧳
+            </div>
+
+
+            <div>
+
+                {% if is_edit %}
+
+                    <h2>
+                        Edit Package Information
+                    </h2>
+
+                    <p>
+                        Update the package details below.
+                    </p>
+
+                {% else %}
+
+                    <h2>
+                        Package Information
+                    </h2>
+
+                    <p>
+                        Enter the details of your new travel package.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FORM -->
+
+        <form
+            method="post"
+            class="package-form"
+        >
+
+            {% csrf_token %}
+
+
+
+            <!-- =================================================
+                 DESTINATION
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.destination.id_for_label }}">
+                    Destination
+                </label>
+
+                {{ form.destination }}
+
+
+                {% for error in form.destination.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 IMAGE URL
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.image_url.id_for_label }}">
+                    Image URL
+                </label>
+
+                {{ form.image_url }}
+
+
+                <small class="field-help">
+                    Enter a valid image URL for the package.
+                </small>
+
+
+                {% for error in form.image_url.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DAYS
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.days.id_for_label }}">
+                    Number of Days
+                </label>
+
+                {{ form.days }}
+
+
+                {% for error in form.days.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NIGHTS
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.nights.id_for_label }}">
+                    Number of Nights
+                </label>
+
+                {{ form.nights }}
+
+
+                {% for error in form.nights.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PRICE
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.price.id_for_label }}">
+                    Price (₹)
+                </label>
+
+                {{ form.price }}
+
+
+                {% for error in form.price.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATUS
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label>
+                    Package Status
+                </label>
+
+
+                <label class="checkbox-group">
+
+                    {{ form.is_active }}
+
+                    <span>
+                        Active Package
+                    </span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DESCRIPTION
+            ================================================== -->
+
+            <div class="form-group full-width">
+
+                <label for="{{ form.description.id_for_label }}">
+                    Description
+                </label>
+
+                {{ form.description }}
+
+
+                {% for error in form.description.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 INCLUSIONS
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.inclusions.id_for_label }}">
+                    Inclusions
+                </label>
+
+                {{ form.inclusions }}
+
+
+                <small class="field-help">
+                    Example: Hotel, Breakfast, Sightseeing
+                </small>
+
+
+                {% for error in form.inclusions.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 EXCLUSIONS
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.exclusions.id_for_label }}">
+                    Exclusions
+                </label>
+
+                {{ form.exclusions }}
+
+
+                <small class="field-help">
+                    Example: Flights, Personal expenses
+                </small>
+
+
+                {% for error in form.exclusions.errors %}
+
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="form-actions">
+
+
+                {% if is_edit %}
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+
+                        💾
+                        Update Package
+
+                    </button>
+
+                {% else %}
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+
+                        💾
+                        Save Package
+
+                    </button>
+
+                {% endif %}
+
+
+
+                <a
+                    href="{% url 'admin_dashboard' %}"
+                    class="cancel-btn"
+                >
+
+                    Cancel
+
+                </a>
+
+
+            </div>
+
+
+        </form>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 TravelAgency Admin Portal
+        </p>
+
+    </footer>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
+
+const menuToggle =
+    document.getElementById("menuToggle");
+
+const sidebar =
+    document.getElementById("sidebar");
+
+const sidebarOverlay =
+    document.getElementById("sidebarOverlay");
+
+
+function openSidebar() {
+
+    sidebar.classList.add("mobile-open");
+
+    sidebarOverlay.classList.add("show");
+
+    document.body.classList.add("menu-open");
+
+}
+
+
+function closeSidebar() {
+
+    sidebar.classList.remove("mobile-open");
+
+    sidebarOverlay.classList.remove("show");
+
+    document.body.classList.remove("menu-open");
+
+}
+
+
+if (menuToggle) {
+
+    menuToggle.addEventListener(
+        "click",
+        openSidebar
+    );
+
+}
+
+
+if (sidebarOverlay) {
+
+    sidebarOverlay.addEventListener(
+        "click",
+        closeSidebar
+    );
+
+}
+
+
+/* CLOSE SIDEBAR WHEN LINK IS CLICKED */
+
+document
+    .querySelectorAll(
+        ".sidebar-nav a, .sidebar-bottom a"
+    )
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                if (window.innerWidth <= 800) {
+
+                    closeSidebar();
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* ESCAPE KEY */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

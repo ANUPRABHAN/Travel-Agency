@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Customer | TravelAgency</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/admin_dashboard.css' %}">
+
+</head>
+
+<body>
+
+<main class="main-content">
+
+    <header class="topbar">
+
+        <div>
+
+            <h1>
+                Edit Customer
+            </h1>
+
+            <p>
+                Update customer information
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <section class="dashboard-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Customer Details
+                </h2>
+
+                <p>
+                    Update the information below.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="contact-form">
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <div class="action-buttons">
+
+                    <button
+                        type="submit"
+                        class="add-btn"
+                    >
+                        💾 Save Changes
+                    </button>
+
+                    <a
+                        href="{% url 'admin_dashboard' %}"
+                        class="secondary-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

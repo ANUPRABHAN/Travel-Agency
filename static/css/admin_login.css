@@ -1,0 +1,405 @@
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: Arial, Helvetica, sans-serif;
+
+min-height: 100vh;
+
+background: #f4f7fa;
+
+}
+
+/* =========================
+LOGIN PAGE
+========================= */
+
+.login-page {
+
+min-height: 100vh;
+
+display: grid;
+
+grid-template-columns: 1fr 1fr;
+
+}
+
+/* =========================
+LEFT IMAGE
+========================= */
+
+.login-image {
+
+background:
+    linear-gradient(
+        rgba(5, 25, 45, 0.70),
+        rgba(5, 25, 45, 0.75)
+    ),
+    url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1500&q=80");
+
+background-size: cover;
+
+background-position: center;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+padding: 50px;
+
+color: white;
+
+}
+
+.image-overlay {
+
+max-width: 500px;
+
+text-align: center;
+
+}
+
+/* BRAND */
+
+.brand {
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+gap: 12px;
+
+margin-bottom: 50px;
+
+}
+
+.brand-icon {
+
+width: 55px;
+height: 55px;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+background: #ff9418;
+
+border-radius: 50%;
+
+font-size: 28px;
+
+}
+
+.brand h1 {
+
+font-size: 32px;
+
+}
+
+.brand span {
+
+color: #ff9418;
+
+}
+
+/* LEFT CONTENT */
+
+.image-overlay h2 {
+
+font-size: 42px;
+
+line-height: 1.2;
+
+margin-bottom: 20px;
+
+}
+
+.image-overlay p {
+
+color: #eeeeee;
+
+font-size: 17px;
+
+line-height: 1.7;
+
+}
+
+/* =========================
+LOGIN SECTION
+========================= */
+
+.login-section {
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+padding: 40px;
+
+}
+
+/* LOGIN BOX */
+
+.login-box {
+
+width: 100%;
+
+max-width: 440px;
+
+background: white;
+
+padding: 45px;
+
+border-radius: 15px;
+
+box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.12);
+
+}
+
+/* HEADING */
+
+.login-heading {
+
+text-align: center;
+
+margin-bottom: 35px;
+
+}
+
+.login-icon {
+
+width: 65px;
+height: 65px;
+
+margin: auto;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+border-radius: 50%;
+
+background: #fff1df;
+
+font-size: 28px;
+
+margin-bottom: 15px;
+
+}
+
+.login-heading h2 {
+
+color: #102c45;
+
+font-size: 30px;
+
+margin-bottom: 10px;
+
+}
+
+.login-heading p {
+
+color: #777;
+
+font-size: 14px;
+
+line-height: 1.5;
+
+}
+
+/* =========================
+FORM
+========================= */
+
+.form-group {
+
+margin-bottom: 20px;
+
+}
+
+.form-group label {
+
+display: block;
+
+color: #24384d;
+
+font-size: 14px;
+
+font-weight: bold;
+
+margin-bottom: 8px;
+
+}
+
+.form-group input {
+
+width: 100%;
+
+padding: 14px 15px;
+
+border: 1px solid #d9dfe5;
+
+border-radius: 7px;
+
+font-size: 15px;
+
+outline: none;
+
+transition: 0.3s;
+
+}
+
+.form-group input {
+
+border-color: #ff9418;
+
+box-shadow:
+    0 0 0 3px rgba(255, 148, 24, 0.12);
+
+}
+
+/* =========================
+OPTIONS
+========================= */
+
+.login-options {
+
+margin-bottom: 20px;
+
+font-size: 13px;
+
+color: #666;
+
+}
+
+.login-options input {
+
+margin-right: 5px;
+
+}
+
+/* =========================
+ERROR
+========================= */
+
+.error-message {
+
+background: #ffe7e7;
+
+border-left: 4px solid #e53935;
+
+color: #b71c1c;
+
+padding: 12px;
+
+border-radius: 5px;
+
+margin-bottom: 20px;
+
+font-size: 14px;
+
+}
+
+/* =========================
+LOGIN BUTTON
+========================= */
+
+.login-btn {
+
+width: 100%;
+
+padding: 15px;
+
+border: none;
+
+border-radius: 7px;
+
+background: #ff9418;
+
+color: white;
+
+font-size: 16px;
+
+font-weight: bold;
+
+cursor: pointer;
+
+transition: 0.3s;
+
+}
+
+.login-btn {
+
+background: #e67d00;
+
+transform: translateY(-2px);
+
+}
+
+/* =========================
+BACK HOME
+========================= */
+
+.back-home {
+
+text-align: center;
+
+margin-top: 25px;
+
+}
+
+.back-home a {
+
+color: #087e91;
+
+text-decoration: none;
+
+font-size: 14px;
+
+}
+
+.back-home a {
+
+text-decoration: underline;
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+
+.login-page {
+
+    grid-template-columns: 1fr;
+}
+
+.login-image {
+
+    display: none;
+}
+
+.login-section {
+
+    padding: 25px;
+}
+
+.login-box {
+
+    padding: 30px;
+}
+
+}
