@@ -1,8 +1,23 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
-    path('', views.main, name='main'),
+
+    # =================================================
+    # HOME
+    # =================================================
+
+    path(
+        '',
+        views.main,
+        name='main'
+    ),
+
+
+    # =================================================
+    # ADMIN LOGIN
+    # =================================================
 
     path(
         'admin-login/',
@@ -10,11 +25,21 @@ urlpatterns = [
         name='admin_login'
     ),
 
+
+    # =================================================
+    # ADMIN DASHBOARD
+    # =================================================
+
     path(
         'admin-dashboard/',
         views.admin_dashboard,
         name='admin_dashboard'
     ),
+
+
+    # =================================================
+    # ADMIN LOGOUT
+    # =================================================
 
     path(
         'admin-logout/',
@@ -22,7 +47,20 @@ urlpatterns = [
         name='admin_logout'
     ),
 
-    # Package Management
+    # =================================================
+    # ADMIN CREDENTIALS
+    # =================================================
+
+    path(
+    'admin-change-credentials/',
+    views.change_admin_credentials,
+    name='change_admin_credentials'
+),
+
+
+    # =================================================
+    # PACKAGE MANAGEMENT
+    # =================================================
 
     path(
         'admin-packages/add/',
@@ -42,11 +80,21 @@ urlpatterns = [
         name='delete_package'
     ),
 
+
+    # =================================================
+    # PACKAGE DETAIL
+    # =================================================
+
     path(
         'package/<int:package_id>/',
         views.package_detail,
         name='package_detail'
     ),
+
+
+    # =================================================
+    # CUSTOMER MANAGEMENT
+    # =================================================
 
     path(
         'admin-customers/edit/<int:customer_id>/',
@@ -58,5 +106,11 @@ urlpatterns = [
         'admin-customers/delete/<int:customer_id>/',
         views.delete_customer,
         name='delete_customer'
+    ),
+
+    path(
+        'admin-settings/',
+        views.admin_settings,
+        name='admin_settings'
     ),
 ]

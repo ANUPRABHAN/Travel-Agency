@@ -1,191 +1,157 @@
 {% load static %}
 
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Admin Login | TravelAgency</title>
+    <title>Admin Login | Combass Holiday</title>
 
-<link rel="stylesheet"
-      href="{% static 'css/admin_login.css' %}">
+    <link
+        rel="stylesheet"
+        href="{% static 'css/admin_login.css' %}"
+    >
 
 </head>
 
+
 <body>
 
-<!-- =========================
-     LOGIN PAGE
-========================== -->
 
 <div class="login-page">
 
 
-    <!-- LEFT SIDE -->
+    <div class="login-card">
 
-    <div class="login-image">
 
-        <div class="image-overlay">
+        <!-- LOGO -->
 
-            <div class="brand">
+        <div class="login-logo">
 
-                <div class="brand-icon">
-                    ✈
-                </div>
-
-                <h1>
-                    Travel<span>Agency</span>
-                </h1>
-
+            <div class="login-icon">
+                ✈
             </div>
 
+            <h1>
+                COMBASS
+            </h1>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div class="login-header">
+
             <h2>
-                Welcome Back,
-                Administrator
+                Admin Login
             </h2>
 
             <p>
-                Manage your customers, travel packages
-                and bookings from one secure dashboard.
+                Sign in to manage your travel agency
             </p>
 
         </div>
 
-    </div>
 
+        <!-- ERROR -->
 
-    <!-- RIGHT SIDE -->
+        {% if error %}
 
-    <div class="login-section">
+            <div class="error-message">
 
-        <div class="login-box">
-
-
-            <div class="login-heading">
-
-                <div class="login-icon">
-                    🔐
-                </div>
-
-                <h2>
-                    Admin Login
-                </h2>
-
-                <p>
-                    Login using your Django
-                    administrator account.
-                </p>
+                ⚠️ {{ error }}
 
             </div>
 
-
-            <!-- Django Login Form -->
-
-            <form method="post">
-
-                {% csrf_token %}
+        {% endif %}
 
 
-                <!-- Error message -->
+        <!-- LOGIN FORM -->
 
-                {% if form.errors %}
+        <form method="post">
 
-                    <div class="error-message">
-
-                        {{ error }}
-                        
-                    </div>
-
-                {% endif %}
+            {% csrf_token %}
 
 
-                <!-- Username -->
+            <!-- USERNAME -->
 
-                <div class="form-group">
+            <div class="form-group">
 
-                    <label for="username">
-                        Username
-                    </label>
+                <label for="username">
+                    Username
+                </label>
 
-                    <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Enter admin username"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Password -->
-
-                <div class="form-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter password"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Remember -->
-
-                <div class="login-options">
-
-                    <label>
-
-                        <input
-                            type="checkbox"
-                            name="remember"
-                        >
-
-                        Remember me
-
-                    </label>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="login-btn"
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter username"
+                    autocomplete="username"
+                    required
                 >
-                    Login to Dashboard
-                </button>
-
-
-            </form>
-
-
-            <div class="back-home">
-
-                <a href="/">
-                    ← Back to TravelAgency
-                </a>
 
             </div>
 
 
-        </div>
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+
+                🔐 Login to Dashboard
+
+            </button>
+
+        </form>
+
+
+        <!-- BACK TO WEBSITE -->
+
+        <a
+            href="{% url 'main' %}"
+            class="back-home"
+        >
+
+            ← Back to Website
+
+        </a>
+
 
     </div>
+
 
 </div>
+
 
 </body>
 

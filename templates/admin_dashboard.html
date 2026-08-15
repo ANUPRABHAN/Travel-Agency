@@ -10,7 +10,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Dashboard | TravelAgency</title>
+    <title>Admin Dashboard | Combass Holiday</title>
 
     <link rel="stylesheet"
           href="{% static 'css/admin_dashboard.css' %}">
@@ -45,7 +45,7 @@
         </div>
 
         <h2>
-            Travel<span>Agency</span>
+            COMBASS
         </h2>
 
     </div>
@@ -170,7 +170,7 @@
             </div>
 
             <strong>
-                Travel<span>Agency</span>
+                COMBASS
             </strong>
 
         </div>
@@ -213,7 +213,7 @@
                 👤
             </div>
 
-            <div>
+            <div class="admin-profile-info">
 
                 <strong>
                     {{ request.user.username }}
@@ -224,6 +224,17 @@
                 </small>
 
             </div>
+
+
+            <!-- SETTINGS BUTTON -->
+
+            <a
+                href="{% url 'admin_settings' %}"
+                class="settings-btn"
+                title="Admin Settings"
+            >
+                ⚙️
+            </a>
 
         </div>
 
@@ -1107,7 +1118,7 @@
     <footer>
 
         <p>
-            © 2026 TravelAgency Admin Portal
+            © 2026 Combass Holiday Admin Portal
         </p>
 
     </footer>

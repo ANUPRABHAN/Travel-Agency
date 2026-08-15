@@ -95,6 +95,33 @@ a {
     color: #ff9d1c;
 }
 
+.brand-logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.brand-name {
+    color: #3e57fa;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.brand-subtitle {
+    color: #9ca3af;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
 
 /* NAVIGATION */
 

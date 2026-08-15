@@ -1,0 +1,248 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Settings | Combass Holiday</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/admin_settings.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="settings-page">
+
+
+    <!-- HEADER -->
+
+    <div class="settings-header">
+
+        <div>
+
+            <h1>
+                ⚙️ Admin Settings
+            </h1>
+
+            <p>
+                Manage your administrator account.
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+
+    <!-- SETTINGS CARD -->
+
+    <div class="settings-card">
+
+
+        <div class="card-header">
+
+            <div class="settings-icon">
+                🔐
+            </div>
+
+            <div>
+
+                <h2>
+                    Change Admin Credentials
+                </h2>
+
+                <p>
+                    Update your administrator username and password.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MESSAGES -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- FORM -->
+
+        <form method="post"
+              action="{% url 'change_admin_credentials' %}">
+
+            {% csrf_token %}
+
+
+
+            <!-- CURRENT PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="current_password">
+                    Current Password
+                </label>
+
+                <input
+                    type="password"
+                    id="current_password"
+                    name="current_password"
+                    placeholder="Enter your current password"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- NEW USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    New Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value="{{ request.user.username }}"
+                    placeholder="Enter new username"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- NEW PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="new_password">
+                    New Password
+                </label>
+
+                <input
+                    type="password"
+                    id="new_password"
+                    name="new_password"
+                    placeholder="Leave blank to keep current password"
+                >
+
+                <small>
+                    Minimum 8 characters.
+                </small>
+
+            </div>
+
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="confirm_password">
+                    Confirm New Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Re-enter new password"
+                >
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="form-actions">
+
+                <a href="{% url 'admin_dashboard' %}"
+                   class="cancel-btn">
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+
+                    💾 Save Changes
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+
+    <!-- SECURITY NOTE -->
+
+    <div class="security-note">
+
+        <strong>
+            🔒 Security Note
+        </strong>
+
+        <p>
+            You must enter your current password before changing
+            your administrator credentials.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

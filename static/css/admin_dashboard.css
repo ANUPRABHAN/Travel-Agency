@@ -403,6 +403,120 @@ textarea {
 
 }
 
+/* =====================================================
+   ADMIN SETTINGS BUTTON
+===================================================== */
+
+.admin-profile {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.admin-profile-info {
+
+    display: none;
+
+}
+
+
+.settings-btn {
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-left: 5px;
+
+    border-radius: 8px;
+
+    background: #f1f3f5;
+
+    color: #26364a;
+
+    font-size: 19px;
+
+    text-decoration: none;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.settings-btn:hover {
+
+    background: #ff9418;
+
+    color: white;
+
+    transform: rotate(25deg);
+
+    box-shadow:
+        0 5px 12px rgba(255,148,24,0.25);
+
+}
+
+
+.settings-btn:active {
+
+    transform: scale(0.95);
+
+}
+
+/* =====================================================
+   ADMIN CREDENTIALS BUTTON
+===================================================== */
+
+.credentials-btn {
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #f3f6fa;
+
+    color: #526274;
+
+    font-size: 16px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.credentials-btn:hover {
+
+    background: #ff9418;
+
+    color: white;
+
+    transform: translateY(-2px);
+
+}
 
 /* =====================================================
    STATISTICS
@@ -1758,28 +1872,23 @@ footer {
 
     .sidebar {
 
-        width: 250px;
-
-        transform:
-            translateX(-100%);
-
-        box-shadow:
-            10px 0 30px rgba(0,0,0,0.15);
+        width: 70px;
 
     }
 
 
-    .sidebar.mobile-open {
+    .sidebar-logo {
 
-        transform:
-            translateX(0);
+        padding: 0;
+
+        justify-content: center;
 
     }
 
 
     .sidebar-logo h2 {
 
-        display: block;
+        display: none;
 
     }
 
@@ -1787,138 +1896,56 @@ footer {
     .sidebar-nav a,
     .sidebar-bottom a {
 
-        font-size: 14px;
+        font-size: 0;
 
-        text-align: left;
+        text-align: center;
 
-        padding: 14px 18px;
+        padding: 15px 5px;
 
     }
 
 
     .main-content {
 
-        margin-left: 0;
+        margin-left: 70px;
 
         padding: 20px;
 
     }
 
 
-    .mobile-topbar {
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 15px;
-
-        background: white;
-
-        padding: 12px 15px;
-
-        border-radius: 10px;
-
-        margin-bottom: 20px;
-
-        box-shadow:
-            0 4px 15px rgba(0,0,0,0.05);
-
-    }
-
-
-    .menu-toggle {
-
-        width: 42px;
-        height: 42px;
-
-        border: none;
-
-        border-radius: 8px;
-
-        background: #09243c;
-
-        color: white;
-
-        font-size: 20px;
-
-        cursor: pointer;
-
-    }
-
-
-    .mobile-logo {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 8px;
-
-        flex: 1;
-
-        color: #172f47;
-
-    }
-
-
-    .mobile-logo span {
-
-        color: #ff9418;
-
-    }
-
-
-    .mobile-logo-icon {
-
-        width: 32px;
-        height: 32px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        background: #ff9418;
-
-        color: white;
-
-        border-radius: 50%;
-
-        font-size: 15px;
-
-    }
-
-
-    .mobile-profile {
-
-        width: 38px;
-        height: 38px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 50%;
-
-        background: #fff0dd;
-
-    }
-
-
     .topbar {
 
-        margin-bottom: 25px;
+        align-items: flex-start;
+
+        gap: 20px;
 
     }
 
 
-    .topbar .admin-profile {
+    /* Hide username information on smaller screens */
+
+    .admin-profile-info {
 
         display: none;
+
+    }
+
+
+    /* Keep profile icon visible */
+
+    .profile-icon {
+
+        display: flex;
+
+    }
+
+
+    /* Keep settings button visible */
+
+    .settings-btn {
+
+        display: flex;
 
     }
 
