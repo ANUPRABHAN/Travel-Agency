@@ -171,12 +171,29 @@ Combass Holiday Pvt Ltd
         form = CustomerForm()
 
 
+    # =================================================
+    # GET WEBSITE CONTACT SETTINGS
+    # =================================================
+
+    site_settings, created = SiteSettings.objects.get_or_create(
+        id=1,
+        defaults={
+            'notification_email': 'lucilucifer844@gmail.com',
+            'address': '123, Travel Street,\nParadise City,\nIndia - 560001',
+            'phone': '+91 98765 43210',
+            'contact_email': 'info@combassholiday.com',
+            'website': 'www.combassholiday.com',
+        }
+    )
+
+
     return render(
         request,
         'index.html',
         {
             'packages': packages,
             'form': form,
+            'site_settings': site_settings,
         }
     )
 
@@ -667,9 +684,14 @@ def delete_customer(request, customer_id):
 
     return redirect('admin_dashboard')
 
+# =====================================================
+# ADMIN SETTINGS
+# =====================================================
+
 @login_required(login_url='admin_login')
 def admin_settings(request):
 
+    # Only staff users can access settings
     if not request.user.is_staff:
 
         logout(request)
@@ -677,20 +699,44 @@ def admin_settings(request):
         return redirect('admin_login')
 
 
-    # Get the single SiteSettings record
+    # -------------------------------------------------
+    # GET OR CREATE SITE SETTINGS
+    # -------------------------------------------------
+
     settings_obj, created = SiteSettings.objects.get_or_create(
-        id=1,
-        defaults={
-            'notification_email': 'lucilucifer844@gmail.com',
-            'address': '123, Travel Street,\nParadise City,\nIndia - 560001',
-            'phone': '+91 98765 43210',
-            'contact_email': 'info@combassholiday.com',
-            'website': 'www.combassholiday.com',
-        }
+        id=1
     )
 
 
+    # -------------------------------------------------
+    # SET DEFAULT VALUES ONLY IF RECORD WAS JUST CREATED
+    # -------------------------------------------------
+
+    if created:
+
+        settings_obj.notification_email = 'lucilucifer844@gmail.com'
+
+        settings_obj.address = (
+            '123, Travel Street,\n'
+            'Paradise City,\n'
+            'India - 560001'
+        )
+
+        settings_obj.phone = '+91 98765 43210'
+
+        settings_obj.contact_email = 'info@combassholiday.com'
+
+        settings_obj.website = 'www.combassholiday.com'
+
+        settings_obj.save()
+
+
+    # -------------------------------------------------
+    # HANDLE POST
+    # -------------------------------------------------
+
     if request.method == 'POST':
+
 
         # =============================================
         # EMAIL NOTIFICATION SETTINGS
@@ -820,6 +866,10 @@ def admin_settings(request):
 
             return redirect('admin_settings')
 
+
+    # -------------------------------------------------
+    # DISPLAY SETTINGS PAGE
+    # -------------------------------------------------
 
     return render(
         request,
