@@ -402,9 +402,7 @@
                     </h4>
 
                     <p>
-                        123, Travel Street,<br>
-                        Paradise City,<br>
-                        India - 560001
+                        {{ site_settings.address|linebreaksbr }}
                     </p>
 
                 </div>
@@ -425,7 +423,7 @@
                     </h4>
 
                     <p>
-                        +91 98765 43210
+                        {{ site_settings.phone }}
                     </p>
 
                 </div>
@@ -446,7 +444,7 @@
                     </h4>
 
                     <p>
-                        info@combassholiday.com
+                        {{ site_settings.contact_email }}
                     </p>
 
                 </div>
@@ -467,7 +465,7 @@
                     </h4>
 
                     <p>
-                        www.combassholiday.com
+                        {{ site_settings.website }}
                     </p>
 
                 </div>
@@ -603,7 +601,7 @@
         © 2026
 
         <span>
-            TravelAgency
+            Combass Holiday Pvt Ltd
         </span>.
 
         All Rights Reserved.

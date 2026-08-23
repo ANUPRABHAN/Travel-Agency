@@ -77,6 +77,225 @@
 
         </div>
 
+        <!-- EMAIL NOTIFICATION SETTINGS -->
+
+        <div class="settings-card email-settings-card">
+
+            <div class="card-header">
+
+                <div class="settings-icon">
+                    📧
+                </div>
+
+                <div>
+
+                    <h2>
+                        Email Notification Settings
+                    </h2>
+
+                    <p>
+                        Choose where package enquiry notifications should be sent.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL FORM -->
+
+            <form method="post"
+                action="{% url 'admin_settings' %}">
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label for="notification_email">
+                        Enquiry Notification Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="notification_email"
+                        name="notification_email"
+                        value="{{ settings.notification_email }}"
+                        placeholder="Enter notification email"
+                        required
+                    >
+
+                    <small>
+                        New package enquiries will be sent to this email address.
+                    </small>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <a href="{% url 'admin_dashboard' %}"
+                    class="cancel-btn">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+
+                        📧 Save Email
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- CONTACT INFORMATION SETTINGS -->
+
+        <div class="settings-card contact-settings-card">
+
+            <div class="card-header">
+
+                <div class="settings-icon">
+                    📞
+                </div>
+
+                <div>
+
+                    <h2>
+                        Contact Information
+                    </h2>
+
+                    <p>
+                        Update the contact information displayed on the website.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT INFORMATION FORM -->
+
+            <form method="post"
+                action="{% url 'admin_settings' %}">
+
+                {% csrf_token %}
+
+
+                <!-- ADDRESS -->
+
+                <div class="form-group">
+
+                    <label for="address">
+                        📍 Address
+                    </label>
+
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="4"
+                        placeholder="Enter business address"
+                        required
+                    >{{ settings.address }}</textarea>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        📞 Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        value="{{ settings.phone }}"
+                        placeholder="Enter phone number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONTACT EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="contact_email">
+                        ✉ Contact Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="contact_email"
+                        name="contact_email"
+                        value="{{ settings.contact_email }}"
+                        placeholder="Enter contact email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- WEBSITE -->
+
+                <div class="form-group">
+
+                    <label for="website">
+                        🌐 Website
+                    </label>
+
+                    <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        value="{{ settings.website }}"
+                        placeholder="Enter website"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <a href="{% url 'admin_dashboard' %}"
+                    class="cancel-btn">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+
+                        💾 Save Contact Info
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
 
 
         <!-- MESSAGES -->

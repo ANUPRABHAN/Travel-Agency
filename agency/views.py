@@ -2,10 +2,11 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.mail import send_mail
 
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Package, Customer
+from .models import Package, Customer, SiteSettings
 from .forms import PackageForm, CustomerForm
 
 
@@ -19,18 +20,136 @@ def main(request):
         is_active=True
     ).order_by('-created_at')
 
+    # Get website contact information
+    settings_obj, created = SiteSettings.objects.get_or_create(
+        id=1,
+        defaults={
+            'notification_email': 'lucilucifer844@gmail.com',
+            'address': '123, Travel Street,\nParadise City,\nIndia - 560001',
+            'phone': '+91 98765 43210',
+            'contact_email': 'info@combassholiday.com',
+            'website': 'www.combassholiday.com',
+        }
+    )
+
     if request.method == 'POST':
 
         form = CustomerForm(request.POST)
 
         if form.is_valid():
 
-            form.save()
+            # ---------------------------------------------
+            # SAVE ENQUIRY TO DATABASE
+            # ---------------------------------------------
 
-            messages.success(
-                request,
-                "Your enquiry has been submitted successfully."
+            customer = form.save()
+
+            # ---------------------------------------------
+            # GET NOTIFICATION EMAIL
+            # ---------------------------------------------
+
+            notification_email = settings_obj.notification_email
+
+            # ---------------------------------------------
+            # PACKAGE NAME
+            # ---------------------------------------------
+
+            if customer.package:
+
+                package_name = customer.package.destination
+
+            else:
+
+                package_name = "No package selected"
+
+            # ---------------------------------------------
+            # EMAIL SUBJECT
+            # ---------------------------------------------
+
+            subject = (
+                f"New Package Enquiry - {customer.full_name}"
             )
+
+            # ---------------------------------------------
+            # EMAIL MESSAGE
+            # ---------------------------------------------
+
+            email_message = f"""
+New package enquiry received from the Combass Travel Agency website.
+
+----------------------------------------
+CUSTOMER DETAILS
+----------------------------------------
+
+👤 Name :
+{customer.full_name}
+
+📧 Email :
+{customer.email}
+
+📞 Mobile :
+{customer.mobile}
+
+🌍 Package :
+{package_name}
+
+📅 Travel Date :
+{customer.travel_date}
+
+Message:
+{customer.message}
+
+----------------------------------------
+
+Please log in to the admin dashboard to view
+and manage this enquiry.
+
+Combass Holiday Pvt Ltd
+"""
+
+            # ---------------------------------------------
+            # SEND EMAIL
+            # ---------------------------------------------
+
+            try:
+
+                send_mail(
+                    subject,
+                    email_message,
+                    None,
+                    [notification_email],
+                    fail_silently=False,
+                )
+
+                email_sent = True
+
+            except Exception as e:
+
+                print(
+                    "EMAIL SENDING ERROR:",
+                    e
+                )
+
+                email_sent = False
+
+            # ---------------------------------------------
+            # SUCCESS MESSAGE
+            # ---------------------------------------------
+
+            if email_sent:
+
+                messages.success(
+                    request,
+                    "Your enquiry has been submitted successfully."
+                )
+
+            else:
+
+                messages.success(
+                    request,
+                    "Your enquiry has been submitted successfully. "
+                    "We will contact you soon."
+                )
 
             return redirect('main')
 
@@ -38,12 +157,17 @@ def main(request):
 
         form = CustomerForm()
 
+    # ---------------------------------------------
+    # SEND DATA TO HOMEPAGE
+    # ---------------------------------------------
+
     return render(
         request,
         'index.html',
         {
             'packages': packages,
             'form': form,
+            'site_settings': settings_obj,
         }
     )
 
@@ -534,13 +658,164 @@ def delete_customer(request, customer_id):
 
     return redirect('admin_dashboard')
 
-@login_required
+@login_required(login_url='admin_login')
 def admin_settings(request):
 
     if not request.user.is_staff:
+
+        logout(request)
+
         return redirect('admin_login')
+
+
+    # Get the single SiteSettings record
+    settings_obj, created = SiteSettings.objects.get_or_create(
+        id=1,
+        defaults={
+            'notification_email': 'lucilucifer844@gmail.com',
+            'address': '123, Travel Street,\nParadise City,\nIndia - 560001',
+            'phone': '+91 98765 43210',
+            'contact_email': 'info@combassholiday.com',
+            'website': 'www.combassholiday.com',
+        }
+    )
+
+
+    if request.method == 'POST':
+
+        # =============================================
+        # EMAIL NOTIFICATION SETTINGS
+        # =============================================
+
+        if 'notification_email' in request.POST:
+
+            notification_email = request.POST.get(
+                'notification_email',
+                ''
+            ).strip()
+
+
+            if not notification_email:
+
+                messages.error(
+                    request,
+                    'Notification email cannot be empty.'
+                )
+
+                return redirect('admin_settings')
+
+
+            settings_obj.notification_email = notification_email
+
+            settings_obj.save()
+
+
+            messages.success(
+                request,
+                'Notification email updated successfully.'
+            )
+
+            return redirect('admin_settings')
+
+
+        # =============================================
+        # CONTACT INFORMATION
+        # =============================================
+
+        if 'address' in request.POST:
+
+            address = request.POST.get(
+                'address',
+                ''
+            ).strip()
+
+            phone = request.POST.get(
+                'phone',
+                ''
+            ).strip()
+
+            contact_email = request.POST.get(
+                'contact_email',
+                ''
+            ).strip()
+
+            website = request.POST.get(
+                'website',
+                ''
+            ).strip()
+
+
+            # -----------------------------------------
+            # VALIDATION
+            # -----------------------------------------
+
+            if not address:
+
+                messages.error(
+                    request,
+                    'Address cannot be empty.'
+                )
+
+                return redirect('admin_settings')
+
+
+            if not phone:
+
+                messages.error(
+                    request,
+                    'Phone number cannot be empty.'
+                )
+
+                return redirect('admin_settings')
+
+
+            if not contact_email:
+
+                messages.error(
+                    request,
+                    'Contact email cannot be empty.'
+                )
+
+                return redirect('admin_settings')
+
+
+            if not website:
+
+                messages.error(
+                    request,
+                    'Website cannot be empty.'
+                )
+
+                return redirect('admin_settings')
+
+
+            # -----------------------------------------
+            # SAVE CONTACT INFORMATION
+            # -----------------------------------------
+
+            settings_obj.address = address
+
+            settings_obj.phone = phone
+
+            settings_obj.contact_email = contact_email
+
+            settings_obj.website = website
+
+            settings_obj.save()
+
+
+            messages.success(
+                request,
+                'Contact information updated successfully.'
+            )
+
+            return redirect('admin_settings')
+
 
     return render(
         request,
-        'admin_settings.html'
+        'admin_settings.html',
+        {
+            'settings': settings_obj
+        }
     )

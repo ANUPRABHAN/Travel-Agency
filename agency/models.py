@@ -60,3 +60,30 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.full_name
+
+class SiteSettings(models.Model):
+
+    notification_email = models.EmailField(
+        default='lucilucifer844@gmail.com'
+    )
+
+    address = models.TextField(
+        default='123, Travel Street,\nParadise City,\nIndia - 560001'
+    )
+
+    phone = models.CharField(
+        max_length=30,
+        default='+91 98765 43210'
+    )
+
+    contact_email = models.EmailField(
+        default='info@combassholiday.com'
+    )
+
+    website = models.CharField(
+        max_length=200,
+        default='www.combassholiday.com'
+    )
+
+    def __str__(self):
+        return self.notification_email
