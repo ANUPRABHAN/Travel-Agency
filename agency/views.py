@@ -2,13 +2,14 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.core.mail import send_mail
+
+import os
+import resend
 
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Package, Customer, SiteSettings
 from .forms import PackageForm, CustomerForm
-
 
 # =====================================================
 # HOME PAGE
@@ -19,18 +20,6 @@ def main(request):
     packages = Package.objects.filter(
         is_active=True
     ).order_by('-created_at')
-
-    # Get website contact information
-    settings_obj, created = SiteSettings.objects.get_or_create(
-        id=1,
-        defaults={
-            'notification_email': 'lucilucifer844@gmail.com',
-            'address': '123, Travel Street,\nParadise City,\nIndia - 560001',
-            'phone': '+91 98765 43210',
-            'contact_email': 'info@combassholiday.com',
-            'website': 'www.combassholiday.com',
-        }
-    )
 
     if request.method == 'POST':
 
@@ -44,11 +33,20 @@ def main(request):
 
             customer = form.save()
 
+
             # ---------------------------------------------
             # GET NOTIFICATION EMAIL
             # ---------------------------------------------
 
+            settings_obj, created = SiteSettings.objects.get_or_create(
+                id=1,
+                defaults={
+                    'notification_email': 'lucilucifer844@gmail.com'
+                }
+            )
+
             notification_email = settings_obj.notification_email
+
 
             # ---------------------------------------------
             # PACKAGE NAME
@@ -62,6 +60,7 @@ def main(request):
 
                 package_name = "No package selected"
 
+
             # ---------------------------------------------
             # EMAIL SUBJECT
             # ---------------------------------------------
@@ -69,6 +68,7 @@ def main(request):
             subject = (
                 f"New Package Enquiry - {customer.full_name}"
             )
+
 
             # ---------------------------------------------
             # EMAIL MESSAGE
@@ -107,18 +107,29 @@ and manage this enquiry.
 Combass Holiday Pvt Ltd
 """
 
+
             # ---------------------------------------------
             # SEND EMAIL
             # ---------------------------------------------
 
             try:
 
-                send_mail(
-                    subject,
-                    email_message,
-                    None,
-                    [notification_email],
-                    fail_silently=False,
+                resend.api_key = os.environ.get(
+                    'RESEND_API_KEY'
+                )
+
+                from_email = os.environ.get(
+                    'RESEND_FROM_EMAIL',
+                    'onboarding@resend.dev'
+                )
+
+                resend.Emails.send(
+                    {
+                        "from": from_email,
+                        "to": [notification_email],
+                        "subject": subject,
+                        "text": email_message,
+                    }
                 )
 
                 email_sent = True
@@ -126,7 +137,7 @@ Combass Holiday Pvt Ltd
             except Exception as e:
 
                 print(
-                    "EMAIL SENDING ERROR:",
+                    "RESEND EMAIL ERROR:",
                     e
                 )
 
@@ -151,15 +162,14 @@ Combass Holiday Pvt Ltd
                     "We will contact you soon."
                 )
 
+
             return redirect('main')
+
 
     else:
 
         form = CustomerForm()
 
-    # ---------------------------------------------
-    # SEND DATA TO HOMEPAGE
-    # ---------------------------------------------
 
     return render(
         request,
@@ -167,7 +177,6 @@ Combass Holiday Pvt Ltd
         {
             'packages': packages,
             'form': form,
-            'site_settings': settings_obj,
         }
     )
 
