@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 import os
 import resend
@@ -10,6 +11,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Package, Customer, SiteSettings
 from .forms import PackageForm, CustomerForm
+
+# =====================================================
+# ADMIN / MODERATOR PERMISSION HELPERS
+# =====================================================
+
+def is_admin(user):
+    return user.is_superuser
+
+
+def is_moderator(user):
+    return (
+        user.is_staff
+        and not user.is_superuser
+    )
 
 # =====================================================
 # HOME PAGE
@@ -75,37 +90,46 @@ def main(request):
             # ---------------------------------------------
 
             email_message = f"""
-New package enquiry received from the Combass Travel Agency website.
+            New package enquiry received from the Combass Travel Agency website.
 
-----------------------------------------
-CUSTOMER DETAILS
-----------------------------------------
+            ----------------------------------------
+            CUSTOMER DETAILS
+            ----------------------------------------
 
-👤 Name :
-{customer.full_name}
+            👤 Name :
+            {customer.full_name}
 
-📧 Email :
-{customer.email}
+            📧 Email :
+            {customer.email}
 
-📞 Mobile :
-{customer.mobile}
+            📞 Mobile :
+            {customer.mobile}
 
-🌍 Package :
-{package_name}
+            🌍 Package :
+            {package_name}
 
-📅 Travel Date :
-{customer.travel_date}
+            👥 Number of Persons :
+            {customer.no_of_persons}
 
-Message:
-{customer.message}
+            📅 Number of Days :
+            {customer.no_of_days}
 
-----------------------------------------
+            💰 Budget :
+            ₹{customer.budget}
 
-Please log in to the admin dashboard to view
-and manage this enquiry.
+            🗓️ Travel Date :
+            {customer.travel_date}
 
-Combass Holiday Pvt Ltd
-"""
+            💬 Message :
+            {customer.message}
+
+            ----------------------------------------
+
+            Please log in to the admin dashboard to view
+            and manage this enquiry.
+
+            Combass Holiday Pvt Ltd
+            """
 
 
             # ---------------------------------------------
@@ -262,7 +286,7 @@ def admin_login(request):
 @login_required(login_url='admin_login')
 def admin_dashboard(request):
 
-    # Only staff users can access dashboard
+    # Only Admins and Moderators can access dashboard
     if not request.user.is_staff:
 
         logout(request)
@@ -283,6 +307,8 @@ def admin_dashboard(request):
             'customers': customers,
             'total_packages': packages.count(),
             'total_customers': customers.count(),
+            'is_admin': is_admin(request.user),
+            'is_moderator': is_moderator(request.user),
         }
     )
 
@@ -307,11 +333,9 @@ def admin_logout(request):
 def change_admin_credentials(request):
 
     # Only staff users can access this page
-    if not request.user.is_staff:
+    if not is_admin(request.user):
 
-        logout(request)
-
-        return redirect('admin_login')
+        raise PermissionDenied
 
     user = request.user
 
@@ -464,11 +488,9 @@ def change_admin_credentials(request):
 @login_required(login_url='admin_login')
 def add_package(request):
 
-    if not request.user.is_staff:
+    if not is_admin(request.user):
 
-        logout(request)
-
-        return redirect('admin_login')
+        raise PermissionDenied
 
     if request.method == 'POST':
 
@@ -506,11 +528,13 @@ def add_package(request):
 @login_required(login_url='admin_login')
 def edit_package(request, package_id):
 
-    if not request.user.is_staff:
+    # Admin and Moderator can edit packages
+    if not (
+        is_admin(request.user)
+        or is_moderator(request.user)
+    ):
 
-        logout(request)
-
-        return redirect('admin_login')
+        raise PermissionDenied
 
     package = get_object_or_404(
         Package,
@@ -559,11 +583,10 @@ def edit_package(request, package_id):
 @login_required(login_url='admin_login')
 def delete_package(request, package_id):
 
-    if not request.user.is_staff:
+    # Only Admin can delete packages
+    if not is_admin(request.user):
 
-        logout(request)
-
-        return redirect('admin_login')
+        raise PermissionDenied
 
     package = get_object_or_404(
         Package,
@@ -610,11 +633,21 @@ def package_detail(request, package_id):
 @login_required(login_url='admin_login')
 def edit_customer(request, customer_id):
 
+    # Admin can edit
+    # Moderator can edit if they have change_customer permission
+
     if not request.user.is_staff:
 
         logout(request)
 
         return redirect('admin_login')
+
+    if not (
+        is_admin(request.user)
+        or is_moderator(request.user)
+    ):
+
+        raise PermissionDenied
 
     customer = get_object_or_404(
         Customer,
@@ -668,6 +701,11 @@ def delete_customer(request, customer_id):
 
         return redirect('admin_login')
 
+    # Only Admin can delete customers
+    if not is_admin(request.user):
+
+        raise PermissionDenied
+
     customer = get_object_or_404(
         Customer,
         id=customer_id
@@ -691,12 +729,10 @@ def delete_customer(request, customer_id):
 @login_required(login_url='admin_login')
 def admin_settings(request):
 
-    # Only staff users can access settings
-    if not request.user.is_staff:
+    # Only Admin can access settings
+    if not is_admin(request.user):
 
-        logout(request)
-
-        return redirect('admin_login')
+        raise PermissionDenied
 
 
     # -------------------------------------------------

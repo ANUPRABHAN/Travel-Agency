@@ -66,6 +66,10 @@ body {
 
 
 .settings-header h1 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size: 30px;
 
@@ -99,7 +103,7 @@ body {
 
     padding: 11px 18px;
 
-    background: #09243c;
+    background: #173c5c;
 
     color: white;
 
@@ -195,6 +199,10 @@ body {
 
 
 .card-header h2 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     color: #172f47;
 
@@ -254,7 +262,7 @@ body {
 
     background: #fff0f0;
 
-    color: #d32f2f;
+    color: #ff0000;
 
     border:
         1px solid #ffcaca;
@@ -429,7 +437,7 @@ body {
 
     border: none;
 
-    background: #ff9418;
+    background: #4169E1;
 
     color: white;
 
@@ -438,7 +446,7 @@ body {
 
 .save-btn:hover {
 
-    background: #df7600;
+    background: #173c5c;
 
     transform: translateY(-2px);
 

@@ -65,7 +65,7 @@ textarea {
     width: 250px;
     height: 100vh;
 
-    background: #09243c;
+    background: #4169E1;
 
     color: white;
 
@@ -117,7 +117,7 @@ textarea {
 
     border-radius: 50%;
 
-    background: #ff9418;
+    background: rgba(23, 78, 166, 0.25);
 
     font-size: 21px;
 
@@ -125,6 +125,10 @@ textarea {
 
 
 .sidebar-logo h2 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size: 20px;
 
@@ -135,7 +139,7 @@ textarea {
 
 .sidebar-logo span {
 
-    color: #ff9418;
+    color: rgba(23, 78, 166, 0.25);
 
 }
 
@@ -166,7 +170,7 @@ textarea {
 
     margin-bottom: 8px;
 
-    color: #b9c7d4;
+    color: white;
 
     border-radius: 7px;
 
@@ -193,7 +197,7 @@ textarea {
 
 .sidebar-nav a.active {
 
-    background: #ff9418;
+    background: rgba(23, 78, 166, 0.25);
 
     color: white;
 
@@ -236,7 +240,7 @@ textarea {
 
 .sidebar-bottom a {
 
-    color: #ffb15a;
+    color: white;
 
 }
 
@@ -244,7 +248,7 @@ textarea {
 .sidebar-bottom a:hover {
 
     background:
-        rgba(255,148,24,0.1);
+        #173c5c;
 
     color: white;
 
@@ -277,6 +281,63 @@ textarea {
 
 }
 
+/* =====================================================
+   LOGOUT FORM
+===================================================== */
+
+.logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+
+.logout-btn {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 14px 18px;
+
+    margin-bottom: 0;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.logout-btn:hover {
+
+    background: #173c5c;
+
+    color: white;
+
+    transform: translateX(3px);
+
+}
 
 /* =====================================================
    MAIN CONTENT
@@ -327,6 +388,10 @@ textarea {
 
 
 .topbar h1 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size: 28px;
 
@@ -375,7 +440,7 @@ textarea {
 
     border-radius: 50%;
 
-    background: #fff0dd;
+    background: #4169E1;
 
     font-size: 20px;
 
@@ -397,7 +462,7 @@ textarea {
 
     display: block;
 
-    color: #888;
+    color: #4169E1;
 
     font-size: 12px;
 
@@ -460,7 +525,7 @@ textarea {
 
 .settings-btn:hover {
 
-    background: #ff9418;
+    background: #4169E1;
 
     color: white;
 
@@ -510,7 +575,7 @@ textarea {
 
 .credentials-btn:hover {
 
-    background: #ff9418;
+    background: #4169E1;
 
     color: white;
 
@@ -592,22 +657,22 @@ textarea {
 
 
 .stat-icon.orange {
-    background: #fff0df;
+    background: #4169E1;
 }
 
 
 .stat-icon.blue {
-    background: #e4f3ff;
+    background: #4169E1;
 }
 
 
 .stat-icon.green {
-    background: #e3f8eb;
+    background: #4169E1;
 }
 
 
 .stat-icon.purple {
-    background: #eee6ff;
+    background: #4169E1;
 }
 
 
@@ -631,7 +696,7 @@ textarea {
 
 .stat-card p {
 
-    color: #7b8794;
+    color: #5e6771;
 
     font-size: 12px;
 
@@ -682,6 +747,10 @@ textarea {
 .section-header h2 {
 
     color: #172f47;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size: 21px;
 
@@ -713,7 +782,7 @@ textarea {
 
     gap: 7px;
 
-    background: #ff9418;
+    background: #4169E1;
 
     color: white;
 
@@ -737,7 +806,7 @@ textarea {
 
 .add-btn:hover {
 
-    background: #df7600;
+    background: #173c5c;
 
     color: white;
 
@@ -775,7 +844,7 @@ table {
 
     border-collapse: collapse;
 
-    min-width: 950px;
+    min-width: 900px;
 
 }
 
@@ -849,7 +918,7 @@ tbody tr:hover {
 
     gap: 10px;
 
-    min-width: 160px;
+    min-width: 100px;
 
 }
 
@@ -875,9 +944,9 @@ tbody tr:hover {
 
     border-radius: 50%;
 
-    background: #ffead1;
+    background: #4169E1;
 
-    color: #d86f00;
+    color: white;
 
     font-weight: bold;
 
@@ -1065,12 +1134,23 @@ tbody tr:hover {
 
 .package-summary {
 
-    display: grid;
+    width:
+        100%;
+
+    max-width:
+        980px;
+
+    margin:
+        auto;
+
+    display:
+        grid;
 
     grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(4, minmax(0, 1fr));
 
-    gap: 22px;
+    gap:
+        15px;
 
 }
 
@@ -1120,7 +1200,7 @@ tbody tr:hover {
 
     width: 100%;
 
-    height: 190px;
+    height: 130px;
 
     background-color: #eef2f5;
 
@@ -1163,9 +1243,9 @@ tbody tr:hover {
 
     color: #172f47;
 
-    font-size: 22px;
+    font-size: 16px;
 
-    margin-bottom: 7px;
+    margin-bottom: 3px;
 
 }
 
@@ -1174,9 +1254,9 @@ tbody tr:hover {
 
     color: #7b8794;
 
-    font-size: 14px;
+    font-size: 13px;
 
-    margin-bottom: 14px;
+    margin-bottom: 3px;
 
 }
 
@@ -1185,11 +1265,11 @@ tbody tr:hover {
 
     display: block;
 
-    color: #e8780b;
+    color: #030658;
 
-    font-size: 20px;
+    font-size: 17px;
 
-    margin-bottom: 10px;
+    margin-bottom: 3px;
 
 }
 
@@ -1221,7 +1301,7 @@ tbody tr:hover {
 
 .package-inactive {
 
-    color: #d32f2f;
+    color: #ed0e0e;
 
 }
 
@@ -1261,8 +1341,9 @@ tbody tr:hover {
 .package-delete-btn {
 
     width: 100%;
+    max-width: 60px;
 
-    min-height: 44px;
+    min-height: 30px;
 
     display: flex;
 
@@ -1270,11 +1351,11 @@ tbody tr:hover {
 
     justify-content: center;
 
-    gap: 7px;
+    gap: 5px;
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: 12px;
 
     font-weight: 600;
 
@@ -1415,49 +1496,6 @@ tbody tr:hover {
 }
 
 
-/* =====================================================
-   BOOKINGS / COMING SOON
-===================================================== */
-
-.coming-soon {
-
-    text-align: center;
-
-    padding: 45px 20px;
-
-    border:
-        1px dashed #d8dee5;
-
-    border-radius: 12px;
-
-}
-
-
-.coming-soon-icon {
-
-    font-size: 45px;
-
-    margin-bottom: 10px;
-
-}
-
-
-.coming-soon h3 {
-
-    color: #34495e;
-
-    margin-bottom: 5px;
-
-}
-
-
-.coming-soon p {
-
-    color: #8995a2;
-
-    font-size: 14px;
-
-}
 
 
 /* =====================================================
@@ -1865,30 +1903,76 @@ footer {
 
 
 /* =====================================================
-   RESPONSIVE - 800px
+   MOBILE SIDEBAR + LAYOUT
+   800px AND BELOW
 ===================================================== */
 
 @media (max-width: 800px) {
 
+    /* ================================================
+       SIDEBAR
+    ================================================ */
+
     .sidebar {
 
-        width: 70px;
+        width: 240px;
+
+        transform: translateX(-100%);
+
+        box-shadow:
+            10px 0 30px rgba(0, 0, 0, 0.15);
+
+        transition:
+            transform 0.3s ease;
 
     }
 
 
+    /* OPEN SIDEBAR */
+
+    .sidebar.mobile-open {
+
+        transform: translateX(0);
+
+    }
+
+
+    /* ================================================
+       SIDEBAR LOGO
+    ================================================ */
+
     .sidebar-logo {
 
-        padding: 0;
+        min-height: 75px;
 
-        justify-content: center;
+        padding:
+            0 22px;
+
+        justify-content:
+            flex-start;
 
     }
 
 
     .sidebar-logo h2 {
 
-        display: none;
+        display:
+            block;
+
+        font-size:
+            19px;
+
+    }
+
+
+    /* ================================================
+       SIDEBAR NAVIGATION
+    ================================================ */
+
+    .sidebar-nav {
+
+        padding:
+            22px 12px;
 
     }
 
@@ -1896,189 +1980,593 @@ footer {
     .sidebar-nav a,
     .sidebar-bottom a {
 
-        font-size: 0;
+        font-size:
+            14px;
 
-        text-align: center;
+        text-align:
+            left;
 
-        padding: 15px 5px;
+        padding:
+            13px 16px;
 
     }
 
+
+    .nav-icon {
+
+        width:
+            22px;
+
+        min-width:
+            22px;
+
+        font-size:
+            16px;
+
+    }
+
+
+    /* ================================================
+       MAIN CONTENT
+    ================================================ */
 
     .main-content {
 
-        margin-left: 70px;
+        margin-left:
+            0;
 
-        padding: 20px;
+        width:
+            100%;
 
-    }
-
-
-    .topbar {
-
-        align-items: flex-start;
-
-        gap: 20px;
+        padding:
+            15px;
 
     }
 
 
-    /* Hide username information on smaller screens */
-
-    .admin-profile-info {
-
-        display: none;
-
-    }
-
-
-    /* Keep profile icon visible */
-
-    .profile-icon {
-
-        display: flex;
-
-    }
-
-
-    /* Keep settings button visible */
-
-    .settings-btn {
-
-        display: flex;
-
-    }
-
-}
-
-
-/* =====================================================
-   RESPONSIVE - 650px
-===================================================== */
-
-@media (max-width: 650px) {
-
-    .main-content {
-
-        padding: 12px;
-
-    }
-
+    /* ================================================
+       MOBILE TOPBAR
+    ================================================ */
 
     .mobile-topbar {
 
-        margin-bottom: 15px;
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        width:
+            100%;
+
+        min-height:
+            52px;
+
+        padding:
+            9px 12px;
+
+        margin-bottom:
+            18px;
+
+        background:
+            white;
+
+        border:
+            1px solid #e3e8ef;
+
+        border-radius:
+            10px;
+
+        box-shadow:
+            0 4px 14px rgba(15, 44, 87, 0.07);
 
     }
 
+
+    /* HAMBURGER */
+
+    .menu-toggle {
+
+        width:
+            38px;
+
+        height:
+            38px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border:
+            none;
+
+        border-radius:
+            7px;
+
+        background:
+            #edf4ff;
+
+        color:
+            #174ea6;
+
+        font-size:
+            21px;
+
+        cursor:
+            pointer;
+
+    }
+
+
+    .menu-toggle:hover {
+
+        background:
+            #174ea6;
+
+        color:
+            white;
+
+    }
+
+
+    /* MOBILE LOGO */
+
+    .mobile-logo {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        flex:
+            1;
+
+    }
+
+
+    .mobile-logo strong {
+
+        color:
+            #174ea6;
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size:
+            18px;
+
+        letter-spacing:
+            1px;
+
+    }
+
+
+    /* MOBILE PROFILE */
+
+    .mobile-profile {
+
+        width:
+            38px;
+
+        height:
+            38px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            50%;
+
+        background:
+            #edf4ff;
+
+        font-size:
+            18px;
+
+    }
+
+
+    /* ================================================
+       DESKTOP TOPBAR HIDDEN
+    ================================================ */
 
     .topbar {
 
-        flex-direction: column;
+        display:
+            flex;
 
-        align-items: flex-start;
+        align-items:
+            flex-start;
 
-        gap: 5px;
+        justify-content:
+            space-between;
+
+        gap:
+            15px;
+
+        margin-bottom:
+            20px;
 
     }
 
 
+    /* ================================================
+       ADMIN PROFILE
+    ================================================ */
+
+    .admin-profile {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            8px;
+
+    }
+
+
+    .admin-profile-info {
+
+        display:
+            none;
+
+    }
+
+
+    .profile-icon {
+
+        width:
+            40px;
+
+        height:
+            40px;
+
+        min-width:
+            40px;
+
+        font-size:
+            18px;
+
+    }
+
+
+    .settings-btn {
+
+        width:
+            38px;
+
+        height:
+            38px;
+
+        margin-left:
+            0;
+
+    }
+
+
+    /* ================================================
+       DASHBOARD HEADING
+    ================================================ */
+
     .topbar h1 {
 
-        font-size: 24px;
+        font-size:
+            25px;
+
+        line-height:
+            1.2;
 
     }
 
 
     .topbar p {
 
-        font-size: 13px;
+        font-size:
+            13px;
 
     }
 
 
+    /* ================================================
+       STATISTICS
+    ================================================ */
+
     .statistics {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr 1fr;
 
-        gap: 12px;
+        gap:
+            12px;
 
-        margin-bottom: 20px;
+        margin-bottom:
+            20px;
 
     }
 
 
     .stat-card {
 
-        padding: 18px;
+        padding:
+            15px;
+
+        gap:
+            10px;
+
+        min-height:
+            78px;
 
     }
 
 
+    .stat-icon {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        min-width:
+            42px;
+
+        border-radius:
+            8px;
+
+        font-size:
+            18px;
+
+    }
+
+
+    .stat-card h3 {
+
+        font-size:
+            20px;
+
+        margin-bottom:
+            2px;
+
+    }
+
+
+    .stat-card p {
+
+        font-size:
+            11px;
+
+        line-height:
+            1.3;
+
+    }
+
+
+    /* ================================================
+       DASHBOARD SECTIONS
+    ================================================ */
+
     .dashboard-section {
 
-        padding: 16px;
+        padding:
+            16px;
 
-        margin-bottom: 20px;
+        margin-bottom:
+            20px;
 
-        border-radius: 10px;
+        border-radius:
+            10px;
 
     }
 
 
     .section-header {
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        align-items: flex-start;
+        align-items:
+            flex-start;
 
-        gap: 15px;
+        gap:
+            12px;
 
-        margin-bottom: 20px;
+        margin-bottom:
+            18px;
 
     }
 
 
     .section-header h2 {
 
-        font-size: 19px;
+        font-size:
+            20px;
 
     }
 
+
+    .section-header p {
+
+        font-size:
+            12px;
+
+        line-height:
+            1.5;
+
+    }
+
+
+    /* ================================================
+       ADD PACKAGE BUTTON
+    ================================================ */
 
     .add-btn {
 
-        width: 100%;
+        width:
+            100%;
+
+        min-height:
+            42px;
+
+        padding:
+            10px 15px;
 
     }
 
 
+    /* ================================================
+       CUSTOMER TABLE
+    ================================================ */
+
+    .table-container {
+
+        width:
+            100%;
+
+        overflow-x:
+            auto;
+
+        overflow-y:
+            hidden;
+
+        border-radius:
+            7px;
+
+    }
+
+
+    table {
+
+        min-width:
+            900px;
+
+    }
+
+
+    th {
+
+        padding:
+            12px 10px;
+
+        font-size:
+            11px;
+
+    }
+
+
+    td {
+
+        padding:
+            12px 10px;
+
+        font-size:
+            12px;
+
+    }
+
+
+    /* ================================================
+       PACKAGE GRID
+    ================================================ */
+
     .package-summary {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
 
-        gap: 18px;
+        gap:
+            15px;
+
+        width:
+            100%;
+
+    }
+
+
+    /* ================================================
+       PACKAGE CARD
+    ================================================ */
+
+    .summary-card {
+
+        width:
+            100%;
+
+        border-radius:
+            10px;
 
     }
 
 
     .summary-image {
 
-        height: 200px;
+        height:
+            170px;
+
+    }
+
+
+    .summary-content {
+
+        padding:
+            15px;
+
+    }
+
+
+    .summary-card h3 {
+
+        font-size:
+            18px;
+
+    }
+
+
+    .package-duration {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .package-price {
+
+        font-size:
+            17px;
 
     }
 
 
     .package-actions {
 
-        flex-direction: column;
+        gap:
+            8px;
 
-    }
-
-
-    .package-actions form {
-
-        width: 100%;
+        padding-top:
+            13px;
 
     }
 
@@ -2086,48 +2574,76 @@ footer {
     .package-edit-btn,
     .package-delete-btn {
 
-        width: 100%;
+        max-width:
+            none;
+
+        min-height:
+            38px;
+
+        font-size:
+            12px;
 
     }
 
 
+    /* ================================================
+       EDIT CUSTOMER MODAL
+    ================================================ */
+
     .customer-modal {
 
-        padding: 10px;
+        padding:
+            10px;
 
     }
 
 
     .customer-modal-content {
 
-        padding: 20px;
+        width:
+            100%;
 
-        max-height: 95vh;
+        max-width:
+            100%;
 
-        border-radius: 12px;
+        max-height:
+            94vh;
+
+        padding:
+            20px;
+
+        border-radius:
+            12px;
 
     }
 
 
     .edit-form-grid {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
 
-        gap: 15px;
+        gap:
+            14px;
 
     }
 
 
     .edit-form-group.full-width {
 
-        grid-column: auto;
+        grid-column:
+            auto;
 
     }
 
 
     .modal-actions {
 
-        flex-direction: column-reverse;
+        flex-direction:
+            column-reverse;
+
+        gap:
+            9px;
 
     }
 
@@ -2135,152 +2651,21 @@ footer {
     .cancel-modal-btn,
     .save-modal-btn {
 
-        width: 100%;
-
-    }
-
-}
-
-
-/* =====================================================
-   RESPONSIVE - 400px
-===================================================== */
-
-@media (max-width: 400px) {
-
-    .main-content {
-
-        padding: 8px;
+        width:
+            100%;
 
     }
 
 
-    .mobile-topbar {
+    /* ================================================
+       FOOTER
+    ================================================ */
 
-        padding: 10px;
+    footer {
 
-    }
-
-
-    .mobile-logo strong {
-
-        font-size: 14px;
+        padding:
+            18px 10px;
 
     }
-
-
-    .topbar h1 {
-
-        font-size: 22px;
-
-    }
-
-
-    .dashboard-section {
-
-        padding: 13px;
-
-    }
-
-
-    .stat-card {
-
-        padding: 15px;
-
-    }
-
-
-    .stat-icon {
-
-        width: 45px;
-        height: 45px;
-
-        min-width: 45px;
-
-        font-size: 19px;
-
-    }
-
-
-    .stat-card h3 {
-
-        font-size: 20px;
-
-    }
-
-
-    .summary-content {
-
-        padding: 16px;
-
-    }
-
-
-    .summary-card h3 {
-
-        font-size: 20px;
-
-    }
-
-
-    .summary-image {
-
-        height: 170px;
-
-    }
-
-
-    .customer-modal-content {
-
-        padding: 16px;
-
-    }
-
-}
-
-/* =====================================================
-   LOGOUT FORM
-===================================================== */
-
-.logout-form {
-    margin: 0;
-    padding: 0;
-}
-
-
-.logout-btn {
-
-    width: 100%;
-
-    display: block;
-
-    padding: 12px 18px;
-
-    border: none;
-
-    background: transparent;
-
-    color: #ff9418;
-
-    font-size: 14px;
-
-    font-family: inherit;
-
-    text-align: left;
-
-    cursor: pointer;
-
-    transition:
-        background 0.25s ease,
-        padding-left 0.25s ease;
-
-}
-
-
-.logout-btn:hover {
-
-    background: rgba(255,148,24,0.1);
-
-    padding-left: 22px;
 
 }

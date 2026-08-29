@@ -109,7 +109,10 @@ body {
 
 .login-logo h1 {
     color: #102c45;
-
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
     font-size: 31px;
     font-weight: 700;
 }
@@ -130,13 +133,17 @@ body {
 
 .login-header h2 {
     color: #102c45;
-    font-size: 27px;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+    font-size: 20px;
     margin-bottom: 8px;
 }
 
 .login-header p {
     color: #777;
-    font-size: 14px;
+    font-size: 10px;
 }
 
 
@@ -174,7 +181,7 @@ body {
 
     color: #24384d;
 
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
 
     margin-bottom: 8px;
@@ -199,7 +206,7 @@ body {
 }
 
 .form-group input:focus {
-    border-color: #ff9418;
+    border-color: #0300a3;
 
     box-shadow:
         0 0 0 3px rgba(255, 148, 24, 0.13);
@@ -213,17 +220,17 @@ body {
 .login-btn {
     width: 100%;
 
-    padding: 15px;
+    padding: 10px;
 
     border: none;
 
     border-radius: 8px;
 
-    background: #ff9418;
+    background: #4169E1;
 
     color: white;
 
-    font-size: 16px;
+    font-size: 15px;
 
     font-weight: bold;
 
@@ -233,7 +240,7 @@ body {
 }
 
 .login-btn:hover {
-    background: #e67d00;
+    background: #173c5c;
 
     transform: translateY(-2px);
 

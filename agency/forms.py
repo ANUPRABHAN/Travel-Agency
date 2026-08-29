@@ -20,6 +20,7 @@ class PackageForm(forms.ModelForm):
         ]
 
         widgets = {
+
             'destination': forms.TextInput(attrs={
                 'placeholder': 'Enter destination'
             }),
@@ -60,6 +61,7 @@ class PackageForm(forms.ModelForm):
             }),
         }
 
+
 class CustomerForm(forms.ModelForm):
 
     class Meta:
@@ -70,6 +72,52 @@ class CustomerForm(forms.ModelForm):
             'mobile',
             'email',
             'package',
+            'no_of_persons',
+            'no_of_days',
+            'budget',
             'travel_date',
             'message',
         ]
+
+        widgets = {
+
+            'full_name': forms.TextInput(attrs={
+                'placeholder': 'Your Name'
+            }),
+
+            'mobile': forms.TextInput(attrs={
+                'placeholder': 'Phone Number'
+            }),
+
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Email Address'
+            }),
+
+            'package': forms.Select(attrs={
+                'id': 'destination'
+            }),
+
+            'no_of_persons': forms.NumberInput(attrs={
+                'min': '1',
+                'placeholder': 'Number of Persons'
+            }),
+
+            'no_of_days': forms.NumberInput(attrs={
+                'min': '1',
+                'placeholder': 'Number of Days'
+            }),
+
+            'budget': forms.NumberInput(attrs={
+                'min': '0',
+                'step': '0.01',
+                'placeholder': 'Budget'
+            }),
+
+            'travel_date': forms.DateInput(attrs={
+                'type': 'date'
+            }),
+
+            'message': forms.Textarea(attrs={
+                'placeholder': 'Tell us about your travel plans...'
+            }),
+        }

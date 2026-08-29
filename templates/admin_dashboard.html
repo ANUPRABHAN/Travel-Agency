@@ -40,10 +40,6 @@
 
     <div class="sidebar-logo">
 
-        <div class="sidebar-icon">
-            ✈
-        </div>
-
         <h2>
             COMBASS
         </h2>
@@ -165,10 +161,6 @@
 
         <div class="mobile-logo">
 
-            <div class="mobile-logo-icon">
-                ✈
-            </div>
-
             <strong>
                 COMBASS
             </strong>
@@ -194,7 +186,11 @@
         <div class="page-heading">
 
             <h1>
-                Admin Dashboard
+                {% if is_admin %}
+                    Admin Dashboard
+                {% else %}
+                    Moderator Dashboard
+                {% endif %}
             </h1>
 
             <p>
@@ -220,7 +216,11 @@
                 </strong>
 
                 <small>
-                    Administrator
+                    {% if is_admin %}
+                        Administrator
+                    {% else %}
+                        Moderator
+                    {% endif %}
                 </small>
 
             </div>
@@ -228,13 +228,15 @@
 
             <!-- SETTINGS BUTTON -->
 
-            <a
-                href="{% url 'admin_settings' %}"
-                class="settings-btn"
-                title="Admin Settings"
-            >
-                ⚙️
-            </a>
+            {% if is_admin %}
+                <a
+                    href="{% url 'admin_settings' %}"
+                    class="settings-btn"
+                    title="Admin Settings"
+                >
+                    ⚙️
+                </a>
+            {% endif %}
 
         </div>
 
@@ -410,6 +412,18 @@
                         </th>
 
                         <th>
+                            Persons
+                        </th>
+
+                        <th>
+                            Days
+                        </th>
+
+                        <th>
+                            Budget
+                        </th>
+
+                        <th>
                             Travel Date
                         </th>
 
@@ -505,6 +519,27 @@
 
 
 
+                        <!-- PERSONS -->
+
+                        <td>
+                            {{ customer.no_of_persons }}
+                        </td>
+
+
+                        <!-- DAYS -->
+
+                        <td>
+                            {{ customer.no_of_days }}
+                        </td>
+
+
+                        <!-- BUDGET -->
+
+                        <td>
+                            ₹{{ customer.budget|floatformat:0 }}
+                        </td>
+
+
                         <!-- TRAVEL DATE -->
 
                         <td>
@@ -543,7 +578,10 @@
                                     data-name="{{ customer.full_name|escape }}"
                                     data-mobile="{{ customer.mobile|escape }}"
                                     data-email="{{ customer.email|escape }}"
-                                    data-package="{{ customer.package.id }}"
+                                    data-package="{% if customer.package %}{{ customer.package.id }}{% endif %}"
+                                    data-persons="{{ customer.no_of_persons }}"
+                                    data-days="{{ customer.no_of_days }}"
+                                    data-budget="{{ customer.budget }}"
                                     data-date="{{ customer.travel_date|date:'Y-m-d' }}"
                                     data-message="{{ customer.message|escape }}"
                                 >
@@ -556,26 +594,31 @@
 
                                 <!-- DELETE -->
 
-                                <form
-                                    method="post"
-                                    action="{% url 'delete_customer' customer.id %}"
-                                    onsubmit="return confirmDelete();"
-                                >
+                                <!-- DELETE - ADMIN ONLY -->
 
-                                    {% csrf_token %}
+                                {% if is_admin %}
 
-                                    <button
-                                        type="submit"
-                                        class="delete-btn"
-                                        title="Delete Customer"
+                                    <form
+                                        method="post"
+                                        action="{% url 'delete_customer' customer.id %}"
+                                        onsubmit="return confirmDelete();"
                                     >
 
-                                        🗑️
+                                        {% csrf_token %}
 
-                                    </button>
+                                        <button
+                                            type="submit"
+                                            class="delete-btn"
+                                            title="Delete Customer"
+                                        >
 
-                                </form>
+                                            🗑️
 
+                                        </button>
+
+                                    </form>
+
+                                {% endif %}
 
                             </div>
 
@@ -590,7 +633,7 @@
                     <tr>
 
                         <td
-                            colspan="8"
+                            colspan="11"
                             class="empty-row"
                         >
 
@@ -642,18 +685,22 @@
 
             <!-- ADD PACKAGE -->
 
-            <a
-                href="{% url 'add_package' %}"
-                class="add-btn"
-            >
+            {% if is_admin %}
 
-                <span>
-                    +
-                </span>
+                <a
+                    href="{% url 'add_package' %}"
+                    class="add-btn"
+                >
 
-                Add New Package
+                    <span>
+                        +
+                    </span>
 
-            </a>
+                    Add New Package
+
+                </a>
+
+            {% endif %}
 
         </div>
 
@@ -753,9 +800,6 @@
                             title="Edit Package"
                         >
 
-                            <span class="button-icon">
-                                ✏️
-                            </span>
 
                             <span>
                                 Edit
@@ -767,31 +811,31 @@
 
                         <!-- DELETE -->
 
-                        <form
-                            method="post"
-                            action="{% url 'delete_package' package.id %}"
-                            onsubmit="return confirmPackageDelete();"
-                        >
+                        {% if is_admin %}
 
-                            {% csrf_token %}
-
-                            <button
-                                type="submit"
-                                class="package-delete-btn"
-                                title="Delete Package"
+                            <form
+                                method="post"
+                                action="{% url 'delete_package' package.id %}"
+                                onsubmit="return confirmPackageDelete();"
                             >
 
-                                <span class="button-icon">
-                                    🗑️
-                                </span>
+                                {% csrf_token %}
 
-                                <span>
-                                    Delete
-                                </span>
+                                <button
+                                    type="submit"
+                                    class="package-delete-btn"
+                                    title="Delete Package"
+                                >
 
-                            </button>
+                                    <span>
+                                        Delete
+                                    </span>
 
-                        </form>
+                                </button>
+
+                            </form>
+
+                        {% endif %}
 
 
                     </div>
@@ -1029,6 +1073,61 @@
 
                     </div>
 
+                    <!-- NUMBER OF PERSONS -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editPersons">
+                            Number of Persons
+                        </label>
+
+                        <input
+                            type="number"
+                            name="no_of_persons"
+                            id="editPersons"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- NUMBER OF DAYS -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editDays">
+                            Number of Days
+                        </label>
+
+                        <input
+                            type="number"
+                            name="no_of_days"
+                            id="editDays"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- BUDGET -->
+
+                    <div class="edit-form-group">
+
+                        <label for="editBudget">
+                            Budget
+                        </label>
+
+                        <input
+                            type="number"
+                            name="budget"
+                            id="editBudget"
+                            min="1"
+                            step="0.01"
+                            placeholder="Enter budget"
+                            required
+                        >
+
+                    </div>
 
 
                     <!-- TRAVEL DATE -->
@@ -1047,7 +1146,6 @@
                         >
 
                     </div>
-
 
 
                     <!-- MESSAGE -->
@@ -1070,7 +1168,6 @@
 
 
                 </div>
-
 
 
                 <!-- ACTIONS -->
@@ -1108,8 +1205,6 @@
         </div>
 
     </div>
-
-
 
     <!-- =================================================
          FOOTER
@@ -1260,6 +1355,18 @@ editButtons.forEach(function(button) {
                 this.dataset.package;
 
 
+            const persons =
+                this.dataset.persons;
+
+
+            const days =
+                this.dataset.days;
+
+
+            const budget =
+                this.dataset.budget;
+
+
             const travelDate =
                 this.dataset.date;
 
@@ -1287,6 +1394,21 @@ editButtons.forEach(function(button) {
             document
                 .getElementById("editPackage")
                 .value = packageId;
+
+
+            document
+                .getElementById("editPersons")
+                .value = persons;
+
+
+            document
+                .getElementById("editDays")
+                .value = days;
+
+
+            document
+                .getElementById("editBudget")
+                .value = budget;
 
 
             document

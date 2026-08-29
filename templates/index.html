@@ -1,26 +1,21 @@
 {% load static %}
 
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>
-        Combass Holiday pvt ltd
+        Combass Holiday Pvt Ltd
     </title>
 
-    <link
-        rel="stylesheet"
-        href="{% static 'css/style.css' %}"
-    >
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 
 </head>
 
@@ -35,12 +30,19 @@
     <a href="#home" class="logo">
 
         <div class="logo-icon">
-            ✈
+            <span>C</span>
         </div>
 
         <div class="brand-text">
-            <span class="brand-name">COMBASS</span>
-            <span class="brand-subtitle">HOLIDAY PVT LTD</span>
+
+            <span class="brand-name">
+                COMBASS
+            </span>
+
+            <span class="brand-subtitle">
+                HOLIDAY PVT LTD
+            </span>
+
         </div>
 
     </a>
@@ -60,11 +62,11 @@
             Contact
         </a>
 
-        <a
-            href="{% url 'admin_login' %}"
-            class="admin-btn"
-        >
-            👤 Admin
+        <a href="{% url 'admin_login' %}"
+           class="admin-btn">
+
+            Admin
+
         </a>
 
     </div>
@@ -75,48 +77,44 @@
 
 <!-- ================= HERO SECTION ================= -->
 
-<section
-    class="hero"
-    id="home"
->
+<section class="hero"
+         id="home">
 
     <div class="hero-content">
 
         <p class="hero-small-title">
-            Travel The World
+            TRAVEL THE WORLD
         </p>
 
         <h1>
-            Create Memories
+            Your Journey.
             <br>
-            That Last Forever
+            Our Expertise.
         </h1>
 
         <p class="hero-description">
 
-            Travel opens your heart, broadens your mind,
-            and fills your life with stories to tell.
-            Discover breathtaking destinations, experience
-            new cultures and create unforgettable memories
-            with us.
+            Travel opens your heart and fills your life with stories to tell. 
+            Discover breathtaking destinations, thoughtfully
+            planned journeys and memorable experiences with Combass Holidays.
 
         </p>
 
 
         <div class="hero-buttons">
 
-            <a
-                href="#packages"
-                class="primary-btn"
-            >
+            <a href="#packages"
+               class="primary-btn">
+
                 Explore Packages
+
             </a>
 
-            <a
-                href="#contact"
-                class="secondary-btn"
-            >
-                Learn More
+            <a href="#contact"
+               class="secondary-btn">
+
+                Plan Your Trip
+
             </a>
 
         </div>
@@ -129,19 +127,17 @@
 
 <!-- ================= PACKAGES SECTION ================= -->
 
-<section
-    class="packages"
-    id="packages"
->
+<section class="packages"
+         id="packages">
 
     <div class="section-heading">
 
         <p>
-            BEST PACKAGES
+            OUR PACKAGES
         </p>
 
         <h2>
-            Popular Tourist Destinations
+            Explore Popular Destinations
         </h2>
 
         <div class="heading-line"></div>
@@ -154,6 +150,7 @@
         {% for package in packages %}
 
         <div class="package-card">
+
 
             <!-- PACKAGE IMAGE -->
 
@@ -176,19 +173,27 @@
                     {{ package.destination }}
                 </h3>
 
+
                 <p class="duration">
+
                     {{ package.days }}
                     Days /
+
                     {{ package.nights }}
                     Nights
+
                 </p>
 
-                <div class="stars">
+
+                <!-- <div class="stars">
                     ★★★★★
-                </div>
+                </div> -->
+
 
                 <p class="price">
+
                     ₹{{ package.price|floatformat:0 }}/-
+
                 </p>
 
 
@@ -197,6 +202,7 @@
                 <button
                     type="button"
                     class="details-btn"
+
                     onclick="openPackageModal(
                         '{{ package.id }}',
                         '{{ package.destination|escapejs }}',
@@ -209,6 +215,7 @@
                         '{{ package.exclusions|escapejs }}'
                     )"
                 >
+
                     <span>
                         View Details
                     </span>
@@ -225,9 +232,14 @@
                 <button
                     type="button"
                     class="select-btn"
-                    onclick="selectPackage('{{ package.id }}')"
+
+                    onclick="selectPackage(
+                        '{{ package.id }}'
+                    )"
                 >
+
                     Select Package
+
                 </button>
 
             </div>
@@ -251,10 +263,8 @@
 
 <!-- ================= PACKAGE DETAILS MODAL ================= -->
 
-<div
-    id="packageModal"
-    class="package-modal"
->
+<div id="packageModal"
+     class="package-modal">
 
     <div class="package-modal-content">
 
@@ -264,10 +274,14 @@
         <button
             type="button"
             class="modal-close"
+
             onclick="closePackageModal()"
+
             aria-label="Close"
         >
-            ✕
+
+            ×
+
         </button>
 
 
@@ -295,10 +309,8 @@
 
                 <p id="modalDuration"></p>
 
-                <p
-                    id="modalPrice"
-                    class="price"
-                ></p>
+                <p id="modalPrice"
+                   class="price"></p>
 
             </div>
 
@@ -347,9 +359,12 @@
             <button
                 type="button"
                 class="select-btn modal-select-btn"
+
                 id="modalSelectButton"
             >
+
                 Select This Package
+
             </button>
 
         </div>
@@ -362,29 +377,35 @@
 
 <!-- ================= CONTACT SECTION ================= -->
 
-<section
-    class="contact"
-    id="contact"
->
+<section class="contact"
+         id="contact">
+
 
     <div class="contact-heading">
 
+        <p class="contact-label">
+            GET IN TOUCH
+        </p>
+
         <h2>
-            Get In Touch
+            Let's Plan Your Journey
         </h2>
 
         <p>
-            Have questions or need help planning your trip?
-            Fill out the form and we'll get back to you.
+
+            Tell us about your travel requirements.
+            Our team will get in touch with you shortly.
+
         </p>
 
     </div>
 
 
+
     <div class="contact-container">
 
 
-        <!-- CONTACT INFORMATION -->
+        <!-- ================= CONTACT INFORMATION ================= -->
 
         <div class="contact-details">
 
@@ -392,7 +413,7 @@
             <div class="contact-item">
 
                 <div class="contact-icon">
-                    📍
+                    A
                 </div>
 
                 <div>
@@ -410,10 +431,11 @@
             </div>
 
 
+
             <div class="contact-item">
 
                 <div class="contact-icon">
-                    📞
+                    P
                 </div>
 
                 <div>
@@ -431,10 +453,11 @@
             </div>
 
 
+
             <div class="contact-item">
 
                 <div class="contact-icon">
-                    ✉
+                    E
                 </div>
 
                 <div>
@@ -452,10 +475,11 @@
             </div>
 
 
+
             <div class="contact-item">
 
                 <div class="contact-icon">
-                    🌐
+                    W
                 </div>
 
                 <div>
@@ -476,7 +500,7 @@
 
 
 
-        <!-- CONTACT FORM -->
+        <!-- ================= CONTACT FORM ================= -->
 
         <div class="contact-form">
 
@@ -485,6 +509,8 @@
                 {% csrf_token %}
 
 
+                <!-- NAME + EMAIL -->
+
                 <div class="form-row">
 
                     <div class="form-group">
@@ -492,7 +518,7 @@
                         <input
                             type="text"
                             name="full_name"
-                            placeholder="Your Name"
+                            placeholder="Full Name"
                             required
                         >
 
@@ -512,6 +538,9 @@
 
                 </div>
 
+
+
+                <!-- PHONE + DESTINATION -->
 
                 <div class="form-row">
 
@@ -539,11 +568,14 @@
                                 Select Destination
                             </option>
 
+
                             {% for package in packages %}
 
-                                <option value="{{ package.id }}">
-                                    {{ package.destination }}
-                                </option>
+                            <option value="{{ package.id }}">
+
+                                {{ package.destination }}
+
+                            </option>
 
                             {% endfor %}
 
@@ -553,6 +585,59 @@
 
                 </div>
 
+
+
+                <!-- PERSONS + DAYS -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <input
+                            type="number"
+                            name="no_of_persons"
+                            min="1"
+                            placeholder="Number of Persons"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <input
+                            type="number"
+                            name="no_of_days"
+                            min="1"
+                            placeholder="Number of Days"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUDGET -->
+
+                <div class="form-group">
+
+                    <input
+                        type="number"
+                        name="budget"
+                        min="1"
+                        step="0.01"
+                        placeholder="Budget (₹)"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- TRAVEL DATE -->
 
                 <div class="form-group">
 
@@ -565,21 +650,29 @@
                 </div>
 
 
+
+                <!-- MESSAGE -->
+
                 <div class="form-group">
 
                     <textarea
                         name="message"
-                        placeholder="Tell us about your travel plans..."
+                        placeholder="Additional requirements or travel details..."
                     ></textarea>
 
                 </div>
 
 
+
+                <!-- SUBMIT -->
+
                 <button
                     type="submit"
                     class="submit-btn"
                 >
-                    ✈ Send Message
+
+                    Send Enquiry
+
                 </button>
 
             </form>
@@ -602,9 +695,9 @@
 
         <span>
             Combass Holiday Pvt Ltd
-        </span>.
+        </span>
 
-        All Rights Reserved.
+        . All Rights Reserved.
 
     </p>
 
@@ -629,7 +722,9 @@ function openPackageModal(
     exclusions
 ) {
 
-    document.getElementById("modalImage").src = image;
+    document.getElementById("modalImage").src =
+        image;
+
 
     document.getElementById("modalImage").alt =
         destination;
@@ -648,15 +743,18 @@ function openPackageModal(
 
 
     document.getElementById("modalDescription").textContent =
-        description || "No description available.";
+        description ||
+        "No description available.";
 
 
     document.getElementById("modalInclusions").textContent =
-        inclusions || "No inclusion details available.";
+        inclusions ||
+        "No inclusion details available.";
 
 
     document.getElementById("modalExclusions").textContent =
-        exclusions || "No exclusion details available.";
+        exclusions ||
+        "No exclusion details available.";
 
 
     document.getElementById("modalSelectButton").onclick =
@@ -673,9 +771,6 @@ function openPackageModal(
         .getElementById("packageModal")
         .classList.add("show");
 
-
-
-    /* Prevent page scrolling while modal is open */
 
     document.body.classList.add("modal-open");
 
