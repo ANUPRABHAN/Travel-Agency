@@ -342,7 +342,7 @@
 
     border: none;
 
-    background: #ff9418;
+    background: #4169E1;
 
     color: white;
 
@@ -351,7 +351,7 @@
 
 .save-btn:hover {
 
-    background: #df7600;
+    background: #173c5c;
 
     transform: translateY(-2px);
 
